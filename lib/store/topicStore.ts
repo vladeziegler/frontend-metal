@@ -32,11 +32,24 @@ export const useTopicStore = create<TopicStoreState>((set, get) => ({
   fetchTopics: async (limit: number = 20) => {
     set({ isLoadingTopics: true, errorTopics: null });
     try {
-      const response = await fetch(`${FASTAPI_BASE_URL}/meta_suggestions?limit=${limit}`);
+      const url = `${FASTAPI_BASE_URL}/meta_suggestions?limit=${limit}`;
+      console.log('TopicStore: Fetching from URL:', url);
+      console.log('TopicStore: FASTAPI_BASE_URL:', FASTAPI_BASE_URL);
+      
+      const response = await fetch(url);
+      console.log('TopicStore: Response status:', response.status);
+      console.log('TopicStore: Response headers:', Object.fromEntries(response.headers.entries()));
+      
       if (!response.ok) {
+        const responseText = await response.text();
+        console.log('TopicStore: Error response body:', responseText);
         throw new Error(`Failed to fetch topics. Status: ${response.status}`);
       }
-      const data: MetaSuggestion[] = await response.json();
+      
+      const responseText = await response.text();
+      console.log('TopicStore: Raw response (first 200 chars):', responseText.substring(0, 200));
+      
+      const data: MetaSuggestion[] = JSON.parse(responseText);
       set({ topics: data, isLoadingTopics: false });
     } catch (error) {
       console.error('TopicStore: Error fetching topics:', error);
