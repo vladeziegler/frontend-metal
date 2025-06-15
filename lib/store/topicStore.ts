@@ -36,7 +36,11 @@ export const useTopicStore = create<TopicStoreState>((set, get) => ({
       console.log('TopicStore: Fetching from URL:', url);
       console.log('TopicStore: FASTAPI_BASE_URL:', FASTAPI_BASE_URL);
       
-      const response = await fetch(url);
+      const response = await fetch(url, {
+        headers: {
+          'ngrok-skip-browser-warning': 'true'
+        }
+      });
       console.log('TopicStore: Response status:', response.status);
       console.log('TopicStore: Response headers:', Object.fromEntries(response.headers.entries()));
       
@@ -63,6 +67,9 @@ export const useTopicStore = create<TopicStoreState>((set, get) => ({
     try {
       const response = await fetch(`${FASTAPI_BASE_URL}/pipelines/generate-meta-suggestions`, {
         method: 'POST',
+        headers: {
+          'ngrok-skip-browser-warning': 'true'
+        }
       });
       if (!response.ok) {
         let errorMsg = `Failed to trigger topic generation. Status: ${response.status}`;
@@ -99,6 +106,9 @@ export const useTopicStore = create<TopicStoreState>((set, get) => ({
     try {
       const response = await fetch(`${FASTAPI_BASE_URL}/meta_suggestions/${topicId}/choose`, {
         method: 'PUT',
+        headers: {
+          'ngrok-skip-browser-warning': 'true'
+        }
       });
 
       if (!response.ok) {
