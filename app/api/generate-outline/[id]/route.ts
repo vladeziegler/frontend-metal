@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 
-const FASTAPI_URL = process.env.FASTAPI_BASE_URL || 'http://localhost:8080';
+const FASTAPI_BASE_URL = process.env.NEXT_PUBLIC_FASTAPI_BASE_URL || 'http://localhost:8000';
 
 export async function POST(request: Request, { params }: { params: Promise<{ id: string }> }) {
   // Ensure request is "used" asynchronously before accessing params to satisfy Next.js
@@ -16,10 +16,11 @@ export async function POST(request: Request, { params }: { params: Promise<{ id:
   }
 
   try {
-    const response = await fetch(`${FASTAPI_URL}/pipelines/generate-article-outline/${id}`, {
+    const response = await fetch(`${FASTAPI_BASE_URL}/pipelines/generate-article-outline/${id}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'ngrok-skip-browser-warning': 'true'
       },
     });
 

@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { GeneratedNewsletterData } from '@/lib/types'; // Adjust path as needed
 
-const FASTAPI_BASE_URL = process.env.NEXT_PUBLIC_FASTAPI_BASE_URL || 'http://localhost:8080'; // Changed port to 8000
+const FASTAPI_BASE_URL = process.env.NEXT_PUBLIC_FASTAPI_BASE_URL || 'http://localhost:8000';
 
 interface NewsletterState {
   generatedNewsletter: GeneratedNewsletterData | null;
@@ -49,6 +49,9 @@ export const useNewsletterStore = create<NewsletterState & NewsletterActions>((s
       // This POSTs to the FastAPI backend which generates and stores the newsletter
       const response = await fetch(`${FASTAPI_BASE_URL}/newsletters/generate/${outlineId}`, {
         method: 'POST',
+        headers: {
+          'ngrok-skip-browser-warning': 'true'
+        }
       });
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({ detail: response.statusText }));
@@ -66,7 +69,11 @@ export const useNewsletterStore = create<NewsletterState & NewsletterActions>((s
   fetchGeneratedNewsletterByOutlineId: async (outlineId) => {
     set({ isLoadingNewsletter: true, errorNewsletter: null });
     try {
-      const response = await fetch(`${FASTAPI_BASE_URL}/generated_newsletters/by_outline/${outlineId}`);
+      const response = await fetch(`${FASTAPI_BASE_URL}/generated_newsletters/by_outline/${outlineId}`, {
+        headers: {
+          'ngrok-skip-browser-warning': 'true'
+        }
+      });
       if (!response.ok) {
         if (response.status === 404) {
           set({ generatedNewsletter: null, isLoadingNewsletter: false }); // Not an error, just no newsletter yet
@@ -97,6 +104,7 @@ export const useNewsletterStore = create<NewsletterState & NewsletterActions>((s
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
+          'ngrok-skip-browser-warning': 'true'
         },
         body: JSON.stringify({ editor_notes: state.editorNotesInput }),
       });
@@ -124,6 +132,9 @@ export const useNewsletterStore = create<NewsletterState & NewsletterActions>((s
     try {
       const response = await fetch(`${FASTAPI_BASE_URL}/generated_newsletters/${newsletterId}/regenerate`, { // Fixed: Direct FastAPI call
         method: 'POST',
+        headers: {
+          'ngrok-skip-browser-warning': 'true'
+        }
       });
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({ error: response.statusText }));

@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import { OutlineAPIResponse } from '@/lib/types'; // Assuming types are correctly defined
 
 // Ensure this matches your actual FASTAPI_BASE_URL for Project_Metal
-const FASTAPI_BASE_URL = process.env.NEXT_PUBLIC_FASTAPI_BASE_URL || 'http://localhost:8080'; 
+const FASTAPI_BASE_URL = process.env.NEXT_PUBLIC_FASTAPI_BASE_URL || 'http://localhost:8000'; 
 
 interface OutlineStoreState {
   outline: OutlineAPIResponse | null;
@@ -32,6 +32,9 @@ export const useOutlineStore = create<OutlineStoreState>((set) => ({
       // Step 1: Trigger outline generation and get its ID
       const generateResponse = await fetch(`${FASTAPI_BASE_URL}/pipelines/generate-article-outline/${topicId}`, {
         method: 'POST',
+        headers: {
+          'ngrok-skip-browser-warning': 'true'
+        }
       });
 
       if (!generateResponse.ok) {
@@ -56,7 +59,11 @@ export const useOutlineStore = create<OutlineStoreState>((set) => ({
       console.log(`OutlineStore: Outline triggered successfully, new outline ID: ${newOutlineId}. Now fetching full outline.`);
 
       // Step 2: Fetch the full outline data using the new ID
-      const fetchResponse = await fetch(`${FASTAPI_BASE_URL}/outlines/${newOutlineId}`);
+      const fetchResponse = await fetch(`${FASTAPI_BASE_URL}/outlines/${newOutlineId}`, {
+        headers: {
+          'ngrok-skip-browser-warning': 'true'
+        }
+      });
       
       if (!fetchResponse.ok) {
         let errorMsg = `Failed to fetch generated outline. Status: ${fetchResponse.status}`;

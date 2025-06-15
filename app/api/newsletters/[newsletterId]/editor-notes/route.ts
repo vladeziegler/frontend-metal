@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 
-const FASTAPI_BASE_URL = process.env.FASTAPI_BASE_URL || 'http://localhost:8080';
+const FASTAPI_BASE_URL = process.env.NEXT_PUBLIC_FASTAPI_BASE_URL || 'http://localhost:8000';
 
 export async function PUT(
   request: Request,
@@ -25,6 +25,7 @@ export async function PUT(
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
+          'ngrok-skip-browser-warning': 'true'
         },
         body: JSON.stringify({ editor_notes }), // FastAPI expects { "editor_notes": "..." }
       }

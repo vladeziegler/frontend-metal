@@ -1,17 +1,18 @@
 import { NextResponse } from 'next/server';
 
 // This should ideally be an environment variable
-const BACKEND_API_URL = process.env.BACKEND_API_URL || 'http://localhost:8080';
+const FASTAPI_BASE_URL = process.env.NEXT_PUBLIC_FASTAPI_BASE_URL || 'http://localhost:8000';
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const days_old = searchParams.get('days_old') || '14'; // Default to 14 days
 
   try {
-    const response = await fetch(`${BACKEND_API_URL}/job_tracking?days_old=${days_old}`, {
+    const response = await fetch(`${FASTAPI_BASE_URL}/job_tracking?days_old=${days_old}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
+            'ngrok-skip-browser-warning': 'true'
         },
         cache: 'no-store', // Ensure we get fresh data on every request
     });
