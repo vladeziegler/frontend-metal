@@ -17,6 +17,7 @@ import { Label } from "@/components/ui/label";
 // NEW: Import DeepDiveDisplay component
 import DeepDiveDisplay from '@/components/DeepDiveDisplay';
 import UpcomingEventsDisplay from '@/components/UpcomingEventsDisplay';
+import FinalNewsletterPreview from '@/components/FinalNewsletterPreview';
 
 // Helper component for displaying individual outline sections
 const DisplayOutlineSection: React.FC<{ section?: ArticleOutlineSection | null, defaultTitle: string }> = ({ section, defaultTitle }) => {
@@ -101,6 +102,7 @@ const DisplayGeneratedNewsletter: React.FC<{ newsletter: GeneratedNewsletterData
 export default function NewsletterGenerator() {
   // Step management from original UI
   const [step, setStep] = useState<"select" | "outline" | "writing">("select");
+  const [isPreviewOpen, setIsPreviewOpen] = useState(false);
 
   // Zustand store integration
   const {
@@ -465,6 +467,14 @@ export default function NewsletterGenerator() {
                           <>🔄 Regenerate with Notes</>
                         )}
                       </Button>
+                      <Button
+                        onClick={() => setIsPreviewOpen(true)}
+                        variant="default"
+                        size="lg"
+                        className="bg-blue-600 hover:bg-blue-700"
+                      >
+                        🚀 Preview Final Newsletter
+                      </Button>
                     </div>
                     {regenerateNewsletterError && (
                       <p className="text-sm text-red-600 mt-2">
@@ -498,6 +508,11 @@ export default function NewsletterGenerator() {
                       </div>
                     </>
                   )}
+
+                  <FinalNewsletterPreview 
+                    isOpen={isPreviewOpen}
+                    onClose={() => setIsPreviewOpen(false)}
+                  />
 
               </CardContent>
             </Card>

@@ -32,8 +32,15 @@ export interface AllDeepDivesData {
   podcast_deep_dive: DeepDivePodcast | null;
 }
 
-interface DeepDiveState {
-  deepDives: AllDeepDivesData | null;
+export interface AllDeepDivesForMetaSuggestionResponse {
+  meta_suggestion_id: number;
+  article_deep_dive: DeepDiveArticle | null;
+  research_deep_dive: DeepDiveResearch | null;
+  podcast_deep_dive: DeepDivePodcast | null;
+}
+
+export interface DeepDiveState {
+  deepDives: AllDeepDivesForMetaSuggestionResponse | null;
   isLoading: boolean;
   error: string | null;
   fetchDeepDives: (metaSuggestionId: number) => Promise<void>;
@@ -59,7 +66,7 @@ export const useDeepDiveStore = create<DeepDiveState>()(
             const errorData = await response.json();
             throw new Error(errorData.error || `Failed to fetch deep dives: ${response.statusText}`);
           }
-          const data: AllDeepDivesData = await response.json();
+          const data: AllDeepDivesForMetaSuggestionResponse = await response.json();
           set({ deepDives: data, isLoading: false });
         } catch (error) {
           const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred';
