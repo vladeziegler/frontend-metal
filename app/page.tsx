@@ -18,6 +18,7 @@ import { Label } from "@/components/ui/label";
 import DeepDiveDisplay from '@/components/DeepDiveDisplay';
 import UpcomingEventsDisplay from '@/components/UpcomingEventsDisplay';
 import FinalNewsletterPreview from '@/components/FinalNewsletterPreview';
+import { SignIn } from '@/components/SignIn';
 
 // Helper component for displaying individual outline sections
 const DisplayOutlineSection: React.FC<{ section?: ArticleOutlineSection | null, defaultTitle: string }> = ({ section, defaultTitle }) => {
@@ -227,6 +228,8 @@ export default function NewsletterGenerator() {
           <div className="lg:col-span-2 space-y-8">
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-gray-900 mb-4">Newsletter Generator</h1>
+          {/* <h1>Sign in</h1> */}
+          <SignIn />
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
             Create compelling financial services newsletters with AI-powered insights. Select a topic, review the
             outline, add your editorial perspective, and generate professional content.
