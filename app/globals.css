@@ -120,3 +120,9 @@
     @apply bg-background text-foreground;
   }
 }
+
+.content-blur {
+  filter: blur(8px);
+  pointer-events: none;
+  user-select: none;
+}
