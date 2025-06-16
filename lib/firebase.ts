@@ -3,7 +3,7 @@ import { initializeApp, getApps } from 'firebase/app';
 import { getAuth, GoogleAuthProvider } from 'firebase/auth';
 
 const firebaseConfig = {
-    apiKey: 'AIzaSy…',
+    apiKey: 'AIzaSyDvj8smPctWDKk5wnHY6MHYBABDkVMjbFE',
     authDomain: 'frontend-metal-production.up.railway.app', // hard-coded
     projectId: 'backbase-460408',
   };  
