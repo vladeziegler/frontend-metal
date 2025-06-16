@@ -16,6 +16,7 @@ import { Label } from "@/components/ui/label";
 
 // NEW: Import DeepDiveDisplay component
 import DeepDiveDisplay from '@/components/DeepDiveDisplay';
+import UpcomingEventsDisplay from '@/components/UpcomingEventsDisplay';
 
 // Helper component for displaying individual outline sections
 const DisplayOutlineSection: React.FC<{ section?: ArticleOutlineSection | null, defaultTitle: string }> = ({ section, defaultTitle }) => {
@@ -493,6 +494,7 @@ export default function NewsletterGenerator() {
                       <DeepDiveDisplay metaSuggestionId={selectedTopicId} />
                       <div className="pt-8">
                         <JobTrackingDisplay />
+                        <UpcomingEventsDisplay />
                       </div>
                     </>
                   )}
