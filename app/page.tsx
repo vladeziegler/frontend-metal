@@ -373,7 +373,7 @@ export default function NewsletterGenerator() {
               </CardContent>
             </Card>
 
-            <Card>
+            {/* <Card>
               <CardHeader>
                 <CardTitle>Editor&apos;s Notes</CardTitle>
                 <CardDescription>
@@ -391,7 +391,7 @@ export default function NewsletterGenerator() {
                   className="mt-2 min-h-[120px]"
                 />
               </CardContent>
-            </Card>
+            </Card> */}
 
             <div className="text-center">
               <Button
