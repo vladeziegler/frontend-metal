@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import { OutlineAPIResponse } from '@/lib/types'; // Assuming types are correctly defined
 
 // Ensure this matches your actual FASTAPI_BASE_URL for Project_Metal
-const FASTAPI_BASE_URL = process.env.NEXT_PUBLIC_FASTAPI_BASE_URL || 'http://localhost:8000'; 
+const FASTAPI_BASE_URL = process.env.NEXT_PUBLIC_FASTAPI_BASE_URL || 'http://localhost:8080'; 
 
 interface OutlineStoreState {
   outline: OutlineAPIResponse | null;

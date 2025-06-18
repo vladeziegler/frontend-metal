@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { MetaSuggestion } from '@/lib/types';
 
-const FASTAPI_BASE_URL = process.env.NEXT_PUBLIC_FASTAPI_BASE_URL || 'http://localhost:8000'; // Changed port to 8000
+const FASTAPI_BASE_URL = process.env.NEXT_PUBLIC_FASTAPI_BASE_URL || 'http://localhost:8080'; // Changed port to 8000
 
 interface TopicStoreState {
   topics: MetaSuggestion[];

@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { GeneratedNewsletterData } from '@/lib/types'; // Adjust path as needed
 
-const FASTAPI_BASE_URL = process.env.NEXT_PUBLIC_FASTAPI_BASE_URL || 'http://localhost:8000';
+const FASTAPI_BASE_URL = process.env.NEXT_PUBLIC_FASTAPI_BASE_URL || 'http://localhost:8080';
 
 interface NewsletterState {
   generatedNewsletter: GeneratedNewsletterData | null;

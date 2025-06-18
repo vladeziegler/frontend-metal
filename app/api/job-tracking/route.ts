@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 
 // This should ideally be an environment variable
-const FASTAPI_BASE_URL = process.env.NEXT_PUBLIC_FASTAPI_BASE_URL || 'http://localhost:8000';
+const FASTAPI_BASE_URL = process.env.NEXT_PUBLIC_FASTAPI_BASE_URL || 'http://localhost:8080';
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
