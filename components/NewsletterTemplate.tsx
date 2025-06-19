@@ -77,6 +77,7 @@ const NewsletterTemplate: React.FC<NewsletterTemplateProps> = ({
     <div style={styles.body}>
       <div style={styles.container}>
         {/* --- HERO --- */}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src="https://ik.imagekit.io/h3u86kveh/backbase-logo-png_seeklogo-457182.png?updatedAt=1750070865004" alt="Backbase logo" style={{ width:'50%', maxWidth:'200px', margin:'-50px auto -50px auto', display:'block' }} />
         <p style={{...styles.small, textAlign: 'center'}}>
           {/* This part can be made dynamic later if needed */}
@@ -101,7 +102,7 @@ const NewsletterTemplate: React.FC<NewsletterTemplateProps> = ({
         )}
 
         {/* --- TIM'S NOTES (positioned before the portrait) --- */}
-        {newsletter?.editor_notes && renderSection("Tim’s Notes", (
+        {newsletter?.editor_notes && renderSection("Tim's Notes", (
             <div style={styles.callout}>
                 <p style={{ margin: 0 }} dangerouslySetInnerHTML={{ __html: newsletter.editor_notes.replace(/\n/g, '<br />') }} />
             </div>
@@ -109,6 +110,7 @@ const NewsletterTemplate: React.FC<NewsletterTemplateProps> = ({
 
         {/* --- PORTRAIT BLOCK --- */}
         <div style={styles.editor}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img 
             src="https://ik.imagekit.io/h3u86kveh/timRutten%20Background%20Removed.png?updatedAt=1750071134948" 
             alt="Tim Rutten" 
@@ -199,7 +201,7 @@ const NewsletterTemplate: React.FC<NewsletterTemplateProps> = ({
         {/* --- FOOTER --- */}
         <div style={styles.divider}></div>
         <p style={{...styles.p, textAlign: 'center', marginBottom: '24px'}}>
-          Want to talk more? <a href="mailto:tim@backbase.com" style={styles.a}>Let’s chat.</a>
+          Want to talk more? <a href="mailto:tim@backbase.com" style={styles.a}>Let&apos;s chat.</a>
         </p>
         <p style={{...styles.small, textAlign: 'center'}}>
           All content in this newsletter was edited by Tim Rutten and the rest of the Backbase team team.<br />
