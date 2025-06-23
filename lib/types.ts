@@ -20,6 +20,7 @@ export interface GeneratedNewsletterData {
   llm_generation_error?: string | null;
   editor_notes?: string | null; // The notes stored in DB, used as input for regen
   editor_note_block?: string | null; // The verbatim block from LLM for display
+  meta_suggestion_id: number;
 }
 
 // Specific data point structure within an Article Outline Section
@@ -85,6 +86,11 @@ export interface MetaSuggestion {
   is_chosen: boolean;
   created_at: string; 
   chosen_at?: string | null; 
+}
+
+// Type for the data expected by the deep dive generation endpoint
+export interface DeepDiveInputData {
+  // ... existing code ...
 }
 
 // Removed duplicate/conflicting definitions below this line by ensuring the above are authoritative. 

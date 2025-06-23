@@ -18,9 +18,12 @@ export async function GET(request: Request) {
     });
 
     if (!response.ok) {
-      const errorData = await response.text();
-      console.error(`Error from backend API: ${response.status} - ${errorData}`);
-      throw new Error(`Failed to fetch job tracking data: ${response.statusText}`);
+      // Try to parse the error response from FastAPI
+      const errorBody = await response.json().catch(() => ({ detail: response.statusText }));
+      const errorMessage = errorBody.detail || 'Unknown backend error';
+      console.error(`Error from backend API [job_tracking]: ${response.status} - ${errorMessage}`);
+      // Forward a more informative error to the client
+      return NextResponse.json({ error: `Failed to fetch job tracking data: ${errorMessage}` }, { status: response.status });
     }
 
     const data = await response.json();

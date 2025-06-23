@@ -22,6 +22,9 @@ import UpcomingEventsDisplay from '@/components/UpcomingEventsDisplay';
 import FinalNewsletterPreview from '@/components/FinalNewsletterPreview';
 import { useAuth } from '@/context/AuthContext';
 import { UnauthorizedModal } from '@/components/UnauthorizedModal';
+import { useDeepDiveStore } from '@/lib/store/deepDiveStore';
+import { useEventsStore } from '@/lib/store/eventsStore';
+import { useJobTrackingStore } from '@/lib/store/jobTrackingStore';
 
 // Helper component for displaying individual outline sections
 const DisplayOutlineSection: React.FC<{ section?: ArticleOutlineSection | null, defaultTitle: string }> = ({ section, defaultTitle }) => {
@@ -147,12 +150,27 @@ export default function NewsletterGenerator() {
     regenerateNewsletterError,
   } = useNewsletterStore();
 
+  const newsletterStore = useNewsletterStore(); // Get the full store instance
   const { user, authStatus, signOut } = useAuth();
+
+  // New store subscriptions
+  const { deepDives, isLoading: isLoadingDeepDives, fetchDeepDives } = useDeepDiveStore();
+  const { events, isLoading: isLoadingEvents, fetchUpcomingEvents } = useEventsStore();
+  const { entries: jobTrackingEntries, isLoading: isLoadingJobs, fetchJobTrackingEntries } = useJobTrackingStore();
 
   // Fetch topics on initial load
   useEffect(() => {
     fetchTopics();
-  }, [fetchTopics]);
+    fetchUpcomingEvents();
+    fetchJobTrackingEntries(14);
+  }, [fetchTopics, fetchUpcomingEvents, fetchJobTrackingEntries]);
+
+  // NEW: Effect to fetch deep dives when a topic is selected
+  useEffect(() => {
+    if (selectedTopicId) {
+      fetchDeepDives(selectedTopicId);
+    }
+  }, [selectedTopicId, fetchDeepDives]);
 
   // Effect to move to outline step when outline is loaded for the selected topic
   useEffect(() => {
@@ -166,9 +184,10 @@ export default function NewsletterGenerator() {
     else if (!selectedTopicId && (step === "outline" || step === "writing")) {
         setStep("select");
         if (clearOutline) clearOutline();
-        if (useNewsletterStore.getState().generatedNewsletter) clearNewsletter();
+        // Use the destructured variables which are stable
+        if (generatedNewsletter) clearNewsletter();
     }
-  }, [outline, selectedTopicId, isLoadingOutline, step, clearOutline, clearNewsletter, generatedNewsletter, setEditorNotesInput]);
+  }, [outline, selectedTopicId, isLoadingOutline, clearOutline, generatedNewsletter, clearNewsletter, setEditorNotesInput]);
 
   const handleTopicSelect = (topicId: number) => {
     const newSelectedId = selectedTopicId === topicId ? null : topicId;
@@ -176,7 +195,7 @@ export default function NewsletterGenerator() {
     if (!newSelectedId) { // If deselecting
         setStep("select");
         if (clearOutline) clearOutline();
-        if (useNewsletterStore.getState().generatedNewsletter) clearNewsletter();
+        if (generatedNewsletter) clearNewsletter();
     }
     // Do not change step here; wait for outline to load if generated or newsletter to load
   };
@@ -215,6 +234,18 @@ export default function NewsletterGenerator() {
   // Determine the currently selected topic object from the topics list
   const currentSelectedTopic = topics.find(t => t.id === selectedTopicId);
 
+  const handleFinalize = () => {
+    // Logic to finalize the newsletter
+    console.log("Newsletter finalized!");
+    setIsPreviewOpen(true); // Open the preview modal on finalization
+  };
+
+  const handleOpenImportedPreview = () => {
+    setIsImportedPreviewOpen(true);
+  };
+  
+  const isLoadingPreview = isLoadingNewsletter || isLoadingDeepDives || isLoadingEvents || isLoadingJobs;
+
   return (
     <>
       {authStatus === 'unauthorized' && <UnauthorizedModal />}
@@ -251,31 +282,6 @@ export default function NewsletterGenerator() {
                       Create compelling financial services newsletters with AI-powered insights. Select a topic, review the
                       outline, add your editorial perspective, and generate professional content.
                     </p>
-
-                    {/* Button to open the new imported newsletter preview */}
-                    <Dialog open={isImportedPreviewOpen} onOpenChange={setIsImportedPreviewOpen}>
-                      <DialogTrigger asChild>
-                        <Button variant="outline" className="mt-4">Preview Imported Newsletter</Button>
-                      </DialogTrigger>
-                      <DialogContent className="max-w-sm w-full h-[90vh] overflow-y-auto p-0">
-                        <DialogHeader className="p-4 border-b">
-                          <DialogTitle>Imported Newsletter Preview</DialogTitle>
-                        </DialogHeader>
-                        {/* 
-                          When ready to make this dynamic, we can fetch data here:
-                          useEffect(() => {
-                            if(isImportedPreviewOpen) {
-                              fetch('/api/newsletter/some-id')
-                                .then(res => res.json())
-                                .then(data => setImportedData(data));
-                            }
-                          }, [isImportedPreviewOpen]);
-                        */}
-                        <div className="overflow-y-auto">
-                          <ImportedNewsletter />
-                        </div>
-                      </DialogContent>
-                    </Dialog>
 
                   </div>
 
@@ -579,9 +585,37 @@ export default function NewsletterGenerator() {
                         </Card>
                     )}
                     </div>
-                  {/* This column is now empty and will be removed by the edit. */}
                   <div className="lg:col-span-1 space-y-8">
+                    {/* This column can be used for actions or status */}
+                    <Card>
+                        <CardHeader>
+                            <CardTitle>Actions</CardTitle>
+                        </CardHeader>
+                        <CardContent className="flex flex-col space-y-2">
+                            <Button onClick={handleOpenImportedPreview} variant="secondary" className="w-full">
+                                Preview Imported Component
+                            </Button>
+                        </CardContent>
+                    </Card>
                   </div>
+                  <Dialog open={isImportedPreviewOpen} onOpenChange={setIsImportedPreviewOpen}>
+                      <DialogContent className="max-w-4xl" style={{ padding: 0 }}>
+                        <div className="bg-white" style={{ maxHeight: '90vh', overflowY: 'auto' }}>
+                          {isLoadingPreview ? (
+                            <div className="flex justify-center items-center h-96">
+                              <Loader2 className="h-8 w-8 animate-spin text-blue-600" />
+                            </div>
+                          ) : (
+                            <ImportedNewsletter
+                              newsletter={generatedNewsletter}
+                              deepDives={deepDives}
+                              upcomingEvents={events}
+                              jobTrackingEntries={jobTrackingEntries}
+                            />
+                          )}
+                        </div>
+                      </DialogContent>
+                    </Dialog>
                 </div>
               )}
             </main>

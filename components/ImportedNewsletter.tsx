@@ -1,5 +1,9 @@
 import React from 'react';
 import Image from 'next/image';
+import { GeneratedNewsletterData, ContentSection } from '@/lib/types';
+import { DeepDiveState } from '@/lib/store/deepDiveStore';
+import { JobTrackingEntry } from '@/lib/store/jobTrackingStore';
+import { UpcomingEvent } from '@/lib/store/eventsStore';
 
 // No longer using next/image for the logos
 // import Image from 'next/image';
@@ -9,7 +13,37 @@ import Image from 'next/image';
 // For now, content is hardcoded to match the original design.
 // It can be refactored later to accept props for dynamic content.
 
-const ImportedNewsletter = () => {
+// Helper to format dates consistently
+const formatDate = (dateString: string | null | undefined) => {
+    if (!dateString) return '';
+    const date = new Date(`${dateString}T00:00:00Z`); // Assuming YYYY-MM-DD from backend
+    return date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
+};
+
+interface ImportedNewsletterProps {
+  newsletter: GeneratedNewsletterData | null;
+  deepDives: DeepDiveState['deepDives'];
+  jobTrackingEntries: JobTrackingEntry[];
+  upcomingEvents: UpcomingEvent[];
+}
+
+const ImportedNewsletter: React.FC<ImportedNewsletterProps> = ({ 
+  newsletter,
+  deepDives,
+  jobTrackingEntries,
+  upcomingEvents,
+}) => {
+  // A helper function to render a section robustly, preventing errors if data is missing
+  const renderSection = (section: ContentSection) => {
+    if (!section || !section.title || !section.content) return null;
+    return (
+      <div className="imported-newsletter-content-section">
+        <h2 className="imported-newsletter-section-title">{section.title}</h2>
+        <div className="imported-newsletter-section-body" dangerouslySetInnerHTML={{ __html: section.content }} />
+      </div>
+    );
+  };
+
   return (
     <div className="imported-newsletter-body">
       <div className="imported-newsletter-container">
@@ -34,31 +68,21 @@ const ImportedNewsletter = () => {
           </div>
         </div>
 
-        <div className="imported-newsletter-content-section">
-            <div className="imported-newsletter-section-body">
-                Recently, we&apos;ve observed a significant shift in the investment landscape, with Venture Capitalists (VCs) championing a new M&A strategy known as &apos;Vertical AI Roll-Ups.&apos; This approach involves VCs acquiring traditional service businesses and embedding AI technology to unlock efficiencies and drive transformative growth. Unlike traditional private equity roll-ups focused on consolidation and cost-cutting, these AI-driven strategies prioritize technology-led value creation. This development is crucial for us as banking leaders, and in this newsletter, we&apos;ll explore why these AI-roll-ups matter, their potential second-order effects, and the opportunities they present for our industry.
-            </div>
-        </div>
-
-        <div className="imported-newsletter-content-section">
-            <h2 className="imported-newsletter-section-title">Navigating the Ripple Effects: From AI Challenges to Strategic Action</h2>
-            <div className="imported-newsletter-section-body">
-                These AI roll-ups create significant ripples. We&apos;ll likely see hyper-efficient niche competitors emerge rapidly, as VCs aim to buy businesses at traditional valuations (e.g., 2x revenue) and sell them at tech multiples (e.g., 20x revenue) after AI integration. However, VCs will face challenges similar to ours: complex AI integration, with 18% of institutions citing poor data quality as a barrier, and heightened regulatory scrutiny, especially as only 23% of financial institutions have mature AI governance. To navigate this, we must act:
-                Boost our internal AI capabilities and focus on clear business wins.
-                Strengthen our data foundations for reliable AI.
-                Develop AI talent and consider strategic tech partnerships.
-                Stay vigilant to shifts in the competitive landscape. Proactive adaptation will be key to thriving in this AI-enhanced environment.
-            </div>
-        </div>
-        
-        <div className="imported-newsletter-content-section">
-            <h2 className="imported-newsletter-section-title">Seizing the AI Opportunity: Building a Future-Ready Bank</h2>
-            <div className="imported-newsletter-section-body">
-                The rise of these AI-powered entities isn&apos;t just a threat; it&apos;s a catalyst for our own innovation. As VCs aim to quickly modernize acquired companies, it highlights the critical need for all banks to have a strong digital foundation. This means creating seamless customer experiences, developing new products quickly, and smoothly integrating technologies like AI. At Backbase, we provide an engagement banking platform designed to help banks achieve this – enabling you to innovate faster, personalize services at scale, and compete effectively in this AI-driven world. The question for all of us is: how prepared are our institutions to not only respond to these new players but to proactively use AI for transformative growth? Your next strategic moves in building an AI-ready bank will be crucial.
-                <br/><br/>
-                <p className="newsletter-takeaway">The emergence of AI-driven roll-ups underscores a clear imperative: financial institutions must accelerate their journey towards AI maturity and digital agility to define the future of banking, rather than be defined by it.</p>
-            </div>
-        </div>
+        {/* --- DYNAMIC NEWSLETTER SECTIONS (Robust Implementation) --- */}
+        {newsletter && (
+          <>
+            {renderSection(newsletter.section1)}
+            {renderSection(newsletter.section2)}
+            {renderSection(newsletter.section3)}
+            {renderSection(newsletter.section4)}
+            
+            {newsletter.key_takeaway && (
+              <div className="imported-newsletter-content-section">
+                  <p className="newsletter-takeaway">{newsletter.key_takeaway}</p>
+              </div>
+            )}
+          </>
+        )}
 
         <div className="imported-newsletter-author-section">
             <Image src="/TimImageSVG.svg" alt="Tim Rutten" width={100} height={100} className="imported-newsletter-author-image" />
@@ -78,17 +102,29 @@ const ImportedNewsletter = () => {
             <Image src="/Slideoftheweek.png" alt="Slide of the week" width={516} height={288} className="slide-image" />
         </div>
 
-        <div className="imported-newsletter-content-section deep-dive-section">
-            <h2 className="imported-newsletter-section-highlight">This made us think</h2>
-            <ol className="imported-newsletter-list deep-dive-list">
-                <li>
-                <strong>VCs&apos; AI Gambit: Transforming Traditional Sectors Through Strategic Roll-Ups:</strong> Venture Capital is spearheading &apos;Vertical AI Roll-Ups,&apos; acquiring traditional service businesses to infuse them with AI, a strategy gaining traction as high interest rates and poor exits challenge Private Equity&apos;s dominance in roll-ups. This novel VC play to unlock value in non-tech sectors via AI underscores both the technology&apos;s vast potential and the risks of applying tech investment models to traditional operations. For leaders at large banks, this signals new AI-driven competitors and M&A shifts, illustrating the urgent need to accelerate internal AI adoption to innovate, manage risk, and serve a transforming market.
-                </li>
-                <li>
-                <strong>AI in Banking: From Potential to Profit with Executive Leadership:</strong> The podcast &apos;AI revolution: transforming the banking landscape&apos; revealed that AI is no longer a fringe technology but a key, accessible driver for modernizing customer experiences and boosting bank efficiency. This evolution mandates that bank leaders champion AI adoption, targeting real-world gains like increased product penetration and enhanced customer engagement, as demonstrated by JPMorgan Chase&apos;s CEO-backed rollout of 300+ AI solutions. This summary from &apos;Banking Reinvented&apos; underscores why strategic AI integration is vital for competitive advantage. The critical takeaway is that unlocking AI&apos;s value requires strong executive sponsorship paired with a clear strategy to address specific business needs.
-                </li>
-            </ol>
-        </div>
+        {/* --- DYNAMIC DEEP DIVE SECTION (Robust Implementation) --- */}
+        {(deepDives?.article_deep_dive || deepDives?.research_deep_dive || deepDives?.podcast_deep_dive) && (
+            <div className="imported-newsletter-content-section deep-dive-section">
+                <h2 className="imported-newsletter-section-highlight">This made us think</h2>
+                <ol className="imported-newsletter-list deep-dive-list">
+                    {deepDives?.article_deep_dive && (
+                        <li>
+                           <p dangerouslySetInnerHTML={{ __html: `<strong>${deepDives.article_deep_dive.deep_dive_title}:</strong> ${deepDives.article_deep_dive.deep_dive_content}` }} />
+                        </li>
+                    )}
+                    {deepDives?.research_deep_dive && (
+                         <li>
+                           <p dangerouslySetInnerHTML={{ __html: `<strong>${deepDives.research_deep_dive.deep_dive_title}:</strong> ${deepDives.research_deep_dive.deep_dive_content}` }} />
+                        </li>
+                    )}
+                    {deepDives?.podcast_deep_dive && (
+                         <li>
+                           <p dangerouslySetInnerHTML={{ __html: `<strong>${deepDives.podcast_deep_dive.deep_dive_title}:</strong> ${deepDives.podcast_deep_dive.deep_dive_content}` }} />
+                        </li>
+                    )}
+                </ol>
+            </div>
+        )}
 
         <div className="imported-newsletter-podcast-section">
             <div className="imported-newsletter-podcast-image-container">
@@ -109,30 +145,35 @@ const ImportedNewsletter = () => {
             </div>
         </div>
 
-        <div className="imported-newsletter-movers-shakers-section">
-            <h2 className="imported-newsletter-section-highlight">Movers & Shakers</h2>
-            <ul className="imported-newsletter-list movers-shakers-list">
-                <li><strong>Mark Whelan</strong>&nbsp;joins&nbsp;Australia and New Zealand Banking Group (ANZ)&nbsp;as&nbsp;Non-executive Director</li>
-                <li><strong>Michelle Russell</strong>&nbsp;joins&nbsp;Australia and New Zealand Banking Group (ANZ)&nbsp;as&nbsp;Global Talent & Culture Digital Employee Experience</li>
-                <li><strong>Stephen White</strong>&nbsp;joins&nbsp;Australia and New Zealand Banking Group (ANZ)&nbsp;as&nbsp;Group Executive Operations</li>
-                <li><strong>Nuno Matos</strong>&nbsp;joins&nbsp;Australia and New Zealand Banking Group (ANZ)&nbsp;as&nbsp;Chief Executive Officer (CEO)</li>
-                <li><strong>Fozia Amanulla</strong>&nbsp;joins&nbsp;Alliance Bank Malaysia Berhad&nbsp;as&nbsp;Chief Business Development Officer for Strategic Business Development Division</li>
-                <li><strong>Rizal IL-Ehzan Fadil Azim</strong>&nbsp;joins&nbsp;Alliance Bank Malaysia Berhad&nbsp;as&nbsp;CEO</li>
-                <li><strong>Michael Lehmbeck</strong>&nbsp;joins&nbsp;AgFirst Farm Credit Bank&nbsp;as&nbsp;Chief Information Officer</li>
-            </ul>
-        </div>
+        {/* --- DYNAMIC MOVERS & SHAKERS --- */}
+        {jobTrackingEntries && jobTrackingEntries.length > 0 && (
+            <div className="imported-newsletter-movers-shakers-section">
+                <h2 className="imported-newsletter-section-highlight">Movers & Shakers</h2>
+                <ul className="imported-newsletter-list movers-shakers-list">
+                    {jobTrackingEntries.map(entry => (
+                        <li key={entry.id}>
+                            <strong>{entry.full_name}</strong>
+                            &nbsp;joins&nbsp;{entry.bank_name}&nbsp;as&nbsp;{entry.role_title}
+                        </li>
+                    ))}
+                </ul>
+            </div>
+        )}
 
-        <div className="imported-newsletter-events-section">
-            <h2 className="imported-newsletter-section-highlight">Upcoming events</h2>
-            <ul className="imported-newsletter-list">
-                <li><strong>Banking Transformation Summit</strong>&nbsp;  •   June 18 2025, US Ent</li>
-                <li><strong>Bahrain Decision-Makers Forum</strong>&nbsp;  •   June 23 2025, Bahrain</li>
-                <li><strong>Finnovex Qatar</strong>&nbsp;  •   June 24 2025, Qatar</li>
-                <li><strong>19th Maghreb Banking Summit</strong>&nbsp;  •   June 24 2025, Libya</li>
-                <li><strong>Thailand Executive Roundtable</strong>&nbsp;  •   July 16 2025, Thailand</li>
-                <li><strong>Revolution Banking Mexico</strong>&nbsp;  •   July 17 2025, Mexico</li>
-            </ul>
-        </div>
+        {/* --- DYNAMIC UPCOMING EVENTS --- */}
+        {upcomingEvents && upcomingEvents.length > 0 && (
+            <div className="imported-newsletter-events-section">
+                <h2 className="imported-newsletter-section-highlight">Upcoming events</h2>
+                <ul className="imported-newsletter-list">
+                    {upcomingEvents.map(event => (
+                        <li key={event.id}>
+                            <strong>{event['Event Name']}</strong>
+                            &nbsp; • &nbsp;{formatDate(event['Event Date'])}, {event.Territory}
+                        </li>
+                    ))}
+                </ul>
+            </div>
+        )}
 
         <footer className="imported-newsletter-footer">
             <div className="imported-newsletter-footer-content">
