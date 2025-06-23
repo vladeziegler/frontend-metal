@@ -13,6 +13,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { CheckCircle, FileText, Edit3, Send, AlertTriangle, Loader2 } from 'lucide-react'; // For icons
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import ImportedNewsletter from '@/components/ImportedNewsletter';
 
 // NEW: Import DeepDiveDisplay component
 import DeepDiveDisplay from '@/components/DeepDiveDisplay';
@@ -105,6 +107,7 @@ export default function NewsletterGenerator() {
   // Step management from original UI
   const [step, setStep] = useState<"select" | "outline" | "writing">("select");
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
+  const [isImportedPreviewOpen, setIsImportedPreviewOpen] = useState(false);
 
   // Zustand store integration
   const {
@@ -248,6 +251,32 @@ export default function NewsletterGenerator() {
                       Create compelling financial services newsletters with AI-powered insights. Select a topic, review the
                       outline, add your editorial perspective, and generate professional content.
                     </p>
+
+                    {/* Button to open the new imported newsletter preview */}
+                    <Dialog open={isImportedPreviewOpen} onOpenChange={setIsImportedPreviewOpen}>
+                      <DialogTrigger asChild>
+                        <Button variant="outline" className="mt-4">Preview Imported Newsletter</Button>
+                      </DialogTrigger>
+                      <DialogContent className="max-w-sm w-full h-[90vh] overflow-y-auto p-0">
+                        <DialogHeader className="p-4 border-b">
+                          <DialogTitle>Imported Newsletter Preview</DialogTitle>
+                        </DialogHeader>
+                        {/* 
+                          When ready to make this dynamic, we can fetch data here:
+                          useEffect(() => {
+                            if(isImportedPreviewOpen) {
+                              fetch('/api/newsletter/some-id')
+                                .then(res => res.json())
+                                .then(data => setImportedData(data));
+                            }
+                          }, [isImportedPreviewOpen]);
+                        */}
+                        <div className="overflow-y-auto">
+                          <ImportedNewsletter />
+                        </div>
+                      </DialogContent>
+                    </Dialog>
+
                   </div>
 
                   {/* Progress Indicator */}
