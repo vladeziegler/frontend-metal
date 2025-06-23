@@ -138,10 +138,16 @@ const ImportedNewsletter: React.FC<ImportedNewsletterProps> = ({
                 </div>
             </div>
             <div className="imported-newsletter-podcast-details">
-                <strong>Want to dive deeper?</strong><br/>
+                <strong>Want to dive deeper?</strong>
                 Go listen to our podcast Banking Reinvented
                 where we explore the various trends reshaping banks.<br/>
-                <a href="#"><strong>Listen here <i className="fas fa-play-circle"></i></strong></a>
+                <a href="http://rss.com/podcasts/banking-reinvented" target="_blank" rel="noopener noreferrer">
+                    <strong>Listen here</strong>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                        <circle cx="12" cy="12" r="11" stroke="currentColor" strokeWidth="2" fill="none"/>
+                        <path d="M10 8l6 4-6 4V8z" fill="currentColor"/>
+                    </svg>
+                </a>
             </div>
         </div>
 

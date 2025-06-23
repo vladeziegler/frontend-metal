@@ -145,39 +145,80 @@
     font-weight: 700; /* Bold */
     font-size: 18px;
     margin-bottom: 24px;
+    text-decoration: none; /* Remove underlines from titles */
 }
 
 .imported-newsletter-list {
     font-size: 16px;
     padding-left: 0;
     list-style-type: none; /* Remove default bullets */
-}
-
-.movers-shakers-list li {
-    margin-bottom: 12px;
-    padding-left: 1em;
-    position: relative;
-}
-
-/* Custom bullet for movers and shakers */
-.movers-shakers-list li::before {
-    content: '•';
-    position: absolute;
-    left: 0;
-    color: #3366FF; /* Or your preferred color */
-    font-weight: bold;
-}
-
-.movers-shakers-list li strong {
-    text-decoration: underline;
+    margin-left: 0;
 }
 
 .imported-newsletter-list li {
     margin-bottom: 12px;
+    padding-left: 0;
+}
+
+/* --- ALIGNMENT FIXES --- */
+
+/* 1. Deep Dive Section - Numbered List */
+.deep-dive-section .imported-newsletter-section-highlight {
+    padding-left: 0; /* Title aligned to left edge */
+}
+.deep-dive-list {
+    list-style-type: decimal;
+    list-style-position: outside;
+    padding-left: 1.5rem; /* Space for numbers */
+    margin-left: 0;
+}
+.deep-dive-list li {
+    padding-left: 0.5rem; /* Additional space after numbers */
+    margin-bottom: 16px;
+}
+
+/* 2. Movers & Shakers - Bulleted List */
+.imported-newsletter-movers-shakers-section .imported-newsletter-section-highlight {
+    padding-left: 0; /* Title aligned to left edge */
+}
+.movers-shakers-list {
+    padding-left: 0;
+    margin-left: 0;
+}
+.movers-shakers-list li {
+    margin-bottom: 12px;
+    padding-left: 1.5rem; /* Space for custom bullet */
+    position: relative;
+}
+.movers-shakers-list li::before {
+    content: '•';
+    position: absolute;
+    left: 0.5rem;
+    color: #3366FF;
+    font-weight: bold;
+}
+
+/* 3. Upcoming Events - Plain List */
+.imported-newsletter-events-section .imported-newsletter-section-highlight {
+    padding-left: 0; /* Title aligned to left edge */
+}
+.imported-newsletter-events-section .imported-newsletter-list {
+    padding-left: 0; /* List content aligned to left edge, same as title */
+}
+
+/* 4. Slide of the Week - Image alignment */
+.imported-newsletter-slide-section .imported-newsletter-section-highlight {
+    padding-left: 0; /* Title aligned to left edge */
+}
+.slide-image {
+    width: 100%;
+    border: 1px solid #f5f5f5;
+    margin-left: 0; /* Image aligned to left edge, same as title */
 }
 
 .imported-newsletter-podcast-section {
     display: flex;
+    align-items: stretch; /* Make both containers the same height */
     margin: 50px 0;
     padding-bottom: 50px; /* Space before the line */
     border-bottom: 1px solid #E0E6EB; /* Correctly add line below */
@@ -185,7 +226,7 @@
 
 .imported-newsletter-podcast-image-container {
     width: 150px;
-    height: 150px;
+    height: 150px; /* Changed from min-height to fixed height */
     background: #000; /* Restored black background */
     display: flex;
     flex-direction: column; /* Stack items vertically */
@@ -195,12 +236,45 @@
     flex-shrink: 0;
     position: relative; /* For positioning the logo inside */
     padding: 20px; /* Add some padding */
+    overflow: hidden; /* Prevent content overflow */
 }
 
 .imported-newsletter-podcast-details {
     background: #A5FEFF;
-    padding: 16px 34px;
+    padding: 20px 34px; /* Changed from 32px to 20px for vertical padding to match left container */
     flex-grow: 1;
+    font-size: 14px;
+    height: 150px; /* Changed from min-height to fixed height */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Center content vertically */
+    overflow: hidden; /* Prevent content overflow */
+}
+
+.imported-newsletter-podcast-details strong {
+    font-size: 14px; /* Changed from 12px to 14px for "Want to dive deeper?" */
+    font-weight: bold;
+}
+
+/* Specific rule for "Listen here" link to override the 14px strong rule */
+.imported-newsletter-podcast-details a strong {
+    font-size: 12px; /* Keep "Listen here" at 12px */
+}
+
+/* Podcast link styling */
+.imported-newsletter-podcast-details a {
+    font-size: 12px;
+    color: #000; /* Changed to black */
+    font-weight: bold; /* Made bold */
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px; /* Increased space between text and icon */
+    margin-top: 4px; /* Reduced from 12px to 4px to remove one line spacing */
+}
+
+.imported-newsletter-podcast-details a:hover {
+    text-decoration: none; /* Remove underline on hover too */
 }
 
 .imported-newsletter-events-section,
@@ -209,11 +283,6 @@
     border: none;
     padding-top: 0;
     margin-top: 50px; /* Restore consistent top margin */
-}
-
-.slide-image {
-    width: 100%;
-    border: 1px solid #f5f5f5;
 }
 
 .imported-newsletter-footer {
@@ -241,6 +310,11 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.imported-newsletter-footer-bottom a {
+    text-decoration: underline;
+    color: #4E4E4E;
 }
 
 .imported-newsletter-footer-socials {
@@ -357,27 +431,24 @@
     font-size: 14px;
     border-bottom: 1px solid #E0E6EB; /* Add line separator BELOW */
     padding-bottom: 25px;             /* Space for the separator */
-    margin-bottom: 0;                 /* Reset margin */
+    margin-bottom: 50px;              /* Space before next section */
     border-top: none;
     padding-top: 0;
+    font-style: italic;
+    color: #4E4E4E;
 }
 
-.imported-newsletter-section-highlight {
+.subscribe-paragraph a {
     color: #3366FF;
-    font-family: 'Libre Franklin', sans-serif;
-    font-weight: 700; /* Bold */
-    font-size: 18px;
-    margin-bottom: 24px;
-    padding-left: 20px;       /* Add space for the numbers */
+    text-decoration: none;
 }
-.deep-dive-list {
-    list-style-type: decimal;
-    padding-left: 20px;
+
+.subscribe-paragraph a:hover {
+    text-decoration: underline;
 }
-.deep-dive-list li {
-    padding-bottom: 0;
-    margin-bottom: 16px;
-    border-bottom: none;
+
+.newsletter-takeaway {
+  font-weight: bold;
 }
 
 .podcast-reimagined-text-container {
@@ -411,26 +482,6 @@
     border-bottom: 1px solid #E0E6EB; /* Add separator before "Upcoming Events" */
     border-top: none;
     padding-top: 0;
-}
-
-.imported-newsletter-section-highlight {
-    color: #3366FF;
-    font-family: 'Libre Franklin', sans-serif;
-    font-weight: 700; /* Bold */
-    font-size: 18px;
-    margin-bottom: 24px;
-    text-decoration: underline;
-}
-
-/* Restore numbered list and remove internal separators */
-.deep-dive-list {
-    list-style-type: decimal;
-    padding-left: 20px;
-}
-.deep-dive-list li {
-    padding-bottom: 0;
-    margin-bottom: 16px;
-    border-bottom: none;
 }
 
 /* Responsive adjustments for smaller screens (NO LONGER NEEDED) */

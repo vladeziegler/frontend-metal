@@ -76,7 +76,7 @@
   --sidebar-accent: oklch(0.97 0 0);
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  --sidebar-ring: oklch(0.556 0 0);
 }
 
 .dark {
@@ -167,14 +167,299 @@
     --sidebar-accent: oklch(0.97 0 0);
     --sidebar-accent-foreground: oklch(0.205 0 0);
     --sidebar-border: oklch(0.922 0 0);
-    --sidebar-ring: oklch(0.708 0 0);
+    --sidebar-ring: oklch(0.556 0 0);
   }
 }
 
+/* 
+================================================================================
+NEWSLETTER COMPONENT STYLES 
+- All styles for the ImportedNewsletter component are consolidated here.
+- This is now the single source of truth, replacing imported-newsletter.css.
+- Rules are organized and simplified to fix font and alignment issues.
+================================================================================
+*/
+
+/* --- Base & Font Fix --- */
 .imported-newsletter-container {
+  max-width: 600px;
   width: 100%;
-  max-width: 640px;
   margin: 0 auto;
-  background-color: #ffffff;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+  background: #ffffff;
+  padding: 24px 5%;
+  container-type: inline-size;
+  color: #091c35;
+  line-height: 1.6;
+  font-family: 'Libre Franklin', sans-serif !important; /* Force override Tailwind */
 }
+
+/* Force all child elements to inherit the correct font and override Tailwind */
+.imported-newsletter-container *,
+.imported-newsletter-container h1,
+.imported-newsletter-container h2,
+.imported-newsletter-container h3,
+.imported-newsletter-container p,
+.imported-newsletter-container li,
+.imported-newsletter-container div,
+.imported-newsletter-container span {
+  font-family: 'Libre Franklin', sans-serif !important;
+  box-sizing: border-box;
+}
+
+/* --- Header --- */
+.corrected-header-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 40px;
+}
+
+.new-logo {
+    display: flex;
+    align-items: center;
+}
+
+.new-logo-text {
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
+    font-size: 18px;
+    font-weight: 300;
+    color: #000;
+    line-height: 1.1;
+}
+
+.imported-newsletter-title {
+    font-weight: 900;
+    font-size: clamp(40px, 15cqw, 79px);
+    color: #000;
+    line-height: 1;
+    margin: 20px 0 5px 0;
+    padding: 0;
+}
+
+.by-backbase-wrapper {
+    font-size: 14px;
+    font-weight: 600;
+    width: 100%;
+    text-align: right;
+}
+
+/* --- Content Sections & Alignment Fix --- */
+.imported-newsletter-content-section {
+    margin-bottom: 32px;
+}
+
+.imported-newsletter-section-title {
+    font-weight: 600;
+    font-size: 16px;
+    color: #000;
+    margin-bottom: 16px;
+}
+
+.imported-newsletter-section-highlight {
+    color: #3366FF;
+    font-weight: 700;
+    font-size: 18px;
+    margin-bottom: 24px;
+    text-decoration: none; /* remove underlines */
+}
+
+/* --- SECTION ALIGNMENT --- */
+
+/* 1. Reset all lists to a common baseline */
+.imported-newsletter-list {
+  list-style-type: none;
+  padding-left: 0;
+  margin-left: 0;
+  font-size: 16px;
+}
+.imported-newsletter-list li {
+  margin-bottom: 12px;
+  padding-left: 0; /* Reset individual item padding */
+}
+
+/* 2. Specific alignment for 'This made us think' (Numbered List) */
+.deep-dive-section h2 {
+  padding-left: 1.5rem; /* Match list's content indentation */
+}
+.deep-dive-list {
+  list-style-type: decimal;
+  list-style-position: outside; /* Puts numbers in the padding area */
+  padding-left: 3rem; /* Provides space for numbers + alignment */
+}
+
+
+/* 3. Specific alignment for 'Movers & Shakers' (Bulleted List) */
+.imported-newsletter-movers-shakers-section h2 {
+  padding-left: 1.5rem; /* Match list's content indentation */
+}
+.movers-shakers-list li {
+  padding-left: 1.5rem; /* Make space for the custom bullet */
+  position: relative;
+}
+.movers-shakers-list li::before {
+    content: '•';
+    color: #3366FF;
+    font-weight: bold;
+    position: absolute;
+    left: 0.5rem; /* Position bullet inside the padding */
+}
+
+/* 4. Specific alignment for 'Upcoming Events' (Plain List) */
+.imported-newsletter-events-section h2,
+.imported-newsletter-events-section .imported-newsletter-list {
+    padding-left: 1.5rem; /* Apply same indent to title and list */
+}
+
+
+/* --- Author & Subscription --- */
+.imported-newsletter-author-section {
+    display: flex;
+    align-items: center;
+    margin-top: 50px;
+    margin-bottom: 25px;
+}
+
+.imported-newsletter-author-image {
+    width: 100px;
+    height: 100px;
+    margin-right: 24px;
+}
+
+.imported-newsletter-author-details {
+    font-size: 14px;
+}
+.imported-newsletter-author-details strong {
+    font-size: 16px;
+}
+
+.subscribe-paragraph {
+    display: block;
+    font-size: 14px;
+    border-bottom: 1px solid #E0E6EB;
+    padding-bottom: 25px;
+    margin-bottom: 50px; /* Give space before next section */
+    font-style: italic;
+    color: #4E4E4E;
+}
+
+.subscribe-paragraph a, .editor-link {
+    color: #3366FF;
+    text-decoration: none;
+}
+.subscribe-paragraph a:hover, .editor-link:hover {
+    text-decoration: underline;
+}
+
+.newsletter-takeaway {
+  font-weight: bold;
+}
+
+/* --- Slide of the Week --- */
+.imported-newsletter-slide-section {
+  margin-top: 50px;
+}
+.slide-image {
+    width: 100%;
+    border: 1px solid #f5f5f5;
+}
+
+/* --- Podcast Section --- */
+.imported-newsletter-podcast-section {
+    display: flex;
+    margin: 50px 0;
+    padding-bottom: 50px;
+    border-bottom: 1px solid #E0E6EB;
+}
+
+.imported-newsletter-podcast-image-container {
+    width: 150px;
+    height: 150px;
+    background: #000;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    color: #fff;
+    flex-shrink: 0;
+    padding: 20px;
+}
+.podcast-reimagined-text-container {
+    margin-top: 10px;
+}
+.podcast-reimagined-title {
+    display: block;
+    font-size: 18px;
+    line-height: 1.2;
+}
+.podcast-reimagined-subtext {
+    margin-top: 10px;
+    font-size: 11px;
+    color: #69FEFF;
+}
+
+.imported-newsletter-podcast-details {
+    background: #A5FEFF;
+    padding: 16px 34px;
+    flex-grow: 1;
+    font-size: 14px;
+}
+.imported-newsletter-podcast-details strong {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/* --- Movers, Shakers & Events --- */
+.imported-newsletter-movers-shakers-section {
+  margin-top: 50px;
+  padding-bottom: 50px;
+  border-bottom: 1px solid #E0E6EB;
+}
+.imported-newsletter-events-section {
+  margin-top: 50px;
+}
+
+/* --- Footer --- */
+.imported-newsletter-footer {
+    background: #F3F6F9;
+    padding: 32px 42px;
+    margin-top: 50px;
+    margin-left: -5%;
+    margin-right: -5%;
+}
+
+.imported-newsletter-footer-content {
+    max-width: 600px;
+    margin: 0 auto;
+    font-size: 12px;
+    color: #000;
+}
+
+.footer-divider {
+    border-top: 1px solid #E0E6EB;
+    margin: 24px 0;
+}
+
+.imported-newsletter-footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.imported-newsletter-footer-bottom a {
+    text-decoration: underline;
+    color: #4E4E4E;
+}
+
+.imported-newsletter-footer-socials {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+}
+
+.imported-newsletter-footer-socials i {
+    font-size: 16px;
+    color: #6B7786;
+}
+
+/* === END NEWSLETTER STYLES === */

@@ -600,6 +600,7 @@ export default function NewsletterGenerator() {
                   </div>
                   <Dialog open={isImportedPreviewOpen} onOpenChange={setIsImportedPreviewOpen}>
                       <DialogContent className="max-w-4xl" style={{ padding: 0 }}>
+                        <DialogTitle className="sr-only">Newsletter Preview</DialogTitle>
                         <div className="bg-white" style={{ maxHeight: '90vh', overflowY: 'auto' }}>
                           {isLoadingPreview ? (
                             <div className="flex justify-center items-center h-96">
