@@ -111,6 +111,13 @@
     color: #091c35;
 }
 
+/* Editor's Notes Section Styling */
+.editor-notes-content {
+    font-size: 16px;
+    color: #091c35;
+    font-style: italic;
+}
+
 .imported-newsletter-author-section {
     display: flex;
     align-items: center;

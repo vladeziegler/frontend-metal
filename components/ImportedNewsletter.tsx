@@ -44,6 +44,28 @@ const ImportedNewsletter: React.FC<ImportedNewsletterProps> = ({
     );
   };
 
+  // Helper function to process editor notes - make first sentence bold, rest italic
+  const processEditorNotes = (editorNotes: string) => {
+    if (!editorNotes) return '';
+    
+    // Find the first sentence (ending with . ! or ?)
+    const firstSentenceMatch = editorNotes.match(/^[^.!?]*[.!?]/);
+    
+    if (firstSentenceMatch) {
+      const firstSentence = firstSentenceMatch[0];
+      const restOfText = editorNotes.substring(firstSentence.length).trim();
+      
+      if (restOfText) {
+        return `<strong>${firstSentence}</strong> ${restOfText}`;
+      } else {
+        return `<strong>${firstSentence}</strong>`;
+      }
+    } else {
+      // If no sentence ending found, make the whole thing bold
+      return `<strong>${editorNotes}</strong>`;
+    }
+  };
+
   return (
     <div className="imported-newsletter-body">
       <div className="imported-newsletter-container">
@@ -67,6 +89,17 @@ const ImportedNewsletter: React.FC<ImportedNewsletterProps> = ({
             <span>by Backbase</span>
           </div>
         </div>
+
+        {/* --- EDITOR'S NOTES SECTION --- */}
+        {newsletter?.editor_notes && (
+          <div className="imported-newsletter-content-section editor-notes-section">
+            <h2 className="imported-newsletter-section-title">Editor&apos;s notes</h2>
+            <div 
+              className="editor-notes-content" 
+              dangerouslySetInnerHTML={{ __html: processEditorNotes(newsletter.editor_notes) }} 
+            />
+          </div>
+        )}
 
         {/* --- DYNAMIC NEWSLETTER SECTIONS (Robust Implementation) --- */}
         {newsletter && (
@@ -184,8 +217,8 @@ const ImportedNewsletter: React.FC<ImportedNewsletterProps> = ({
         <footer className="imported-newsletter-footer">
             <div className="imported-newsletter-footer-content">
                 <p>
-                    Want to talk more? <strong>Let's chat.</strong><br/>
-                    All content in this newsletter was edited by Tim Rutten and the rest of the Backbase team. Sent by Backbase, Oosterdoksstraat 114, 1011 DK Amsterdam, The Netherlands
+                    Want to talk more? <strong>Let&apos;s chat.</strong><br/>
+                    All content in this newsletter was edited by Tim Rutten and the rest of the Backbase team. Sent by Backbase, Oosterdoksstraat 114, 1011 DK Amsterdam, The Netherlands
                 </p>
                 <div className="footer-divider"></div>
                 <div className="imported-newsletter-footer-bottom">
