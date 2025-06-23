@@ -72,28 +72,26 @@
 
 .corrected-header-container {
     display: flex;
-    flex-direction: column;
+    flex-direction: column; /* Stack items vertically */
+    align-items: flex-start; /* Align items to the left */
     margin-bottom: 40px;
-    position: relative;
 }
 
 .imported-newsletter-title {
     font-family: 'Libre Franklin', sans-serif;
     font-weight: 900; /* Black */
-    /* Use clamp with container query width (cqw) for robust responsiveness */
-    font-size: clamp(40px, 15.5cqw, 79px);
+    font-size: clamp(40px, 15cqw, 79px);
     color: #000;
-    text-align: left;
     line-height: 1;
-    margin: 24px 0 30px 0; /* Add margin-top and space for the byline below */
+    margin: 20px 0 5px 0; /* Vertical spacing */
+    padding: 0; /* Reset padding */
 }
 
 .by-backbase-wrapper {
     font-size: 14px;
     font-weight: 600;
-    position: absolute; /* Position relative to the container */
-    bottom: 5px;          /* Align to the bottom of the container */
-    right: 0;           /* Align to the right of the container */
+    width: 100%;
+    text-align: right; /* Align text to the right */
 }
 
 .imported-newsletter-content-section {
@@ -117,13 +115,13 @@
     display: flex;
     align-items: center;
     margin-top: 50px;
-    margin-bottom: 50px;
+    margin-bottom: 25px; /* Reduced bottom margin */
 }
 
 .imported-newsletter-author-image {
     width: 100px;
     height: 100px;
-    border-radius: 50%;
+    /* border-radius: 50%; /* No longer needed for the SVG */
     margin-right: 24px;
 }
 
@@ -181,6 +179,8 @@
 .imported-newsletter-podcast-section {
     display: flex;
     margin: 50px 0;
+    padding-bottom: 50px; /* Space before the line */
+    border-bottom: 1px solid #E0E6EB; /* Correctly add line below */
 }
 
 .imported-newsletter-podcast-image-container {
@@ -206,7 +206,9 @@
 .imported-newsletter-events-section,
 .imported-newsletter-movers-shakers-section,
 .imported-newsletter-slide-section {
-    margin-top: 50px;
+    border: none;
+    padding-top: 0;
+    margin-top: 50px; /* Restore consistent top margin */
 }
 
 .slide-image {
@@ -352,8 +354,12 @@
 
 .subscribe-paragraph {
     display: block;
-    margin-top: 20px;
     font-size: 14px;
+    border-bottom: 1px solid #E0E6EB; /* Add line separator BELOW */
+    padding-bottom: 25px;             /* Space for the separator */
+    margin-bottom: 0;                 /* Reset margin */
+    border-top: none;
+    padding-top: 0;
 }
 
 .imported-newsletter-section-highlight {
@@ -362,28 +368,16 @@
     font-weight: 700; /* Bold */
     font-size: 18px;
     margin-bottom: 24px;
-}
-
-.deep-dive-section {
-    margin-top: 32px; /* Space between slide and this section */
-}
-
-.newsletter-takeaway {
-    font-weight: 700; /* Bold */
-    font-size: 16px;
-}
-
-.deep-dive-list {
-    list-style-type: decimal; /* Ensure numbers are displayed */
     padding-left: 20px;       /* Add space for the numbers */
 }
-.deep-dive-list li {
-    padding-bottom: 16px;
-    margin-bottom: 16px;
-    border-bottom: 1px solid #E0E6EB; /* Light grey line */
+.deep-dive-list {
+    list-style-type: decimal;
+    padding-left: 20px;
 }
-.deep-dive-list li:last-child {
-    border-bottom: none; /* Remove border from last item */
+.deep-dive-list li {
+    padding-bottom: 0;
+    margin-bottom: 16px;
+    border-bottom: none;
 }
 
 .podcast-reimagined-text-container {
@@ -400,6 +394,43 @@
     margin-top: 10px; /* Space between title and subtext */
     font-size: 11px;
     color: #69FEFF;
+}
+
+/* Reset all section styles for clean alignment */
+.imported-newsletter-slide-section,
+.imported-newsletter-events-section,
+.deep-dive-section {
+    border: none;
+    padding-top: 0;
+    margin-top: 50px;
+}
+
+.imported-newsletter-movers-shakers-section {
+    margin-top: 50px;
+    padding-bottom: 50px; /* Space for the separator */
+    border-bottom: 1px solid #E0E6EB; /* Add separator before "Upcoming Events" */
+    border-top: none;
+    padding-top: 0;
+}
+
+.imported-newsletter-section-highlight {
+    color: #3366FF;
+    font-family: 'Libre Franklin', sans-serif;
+    font-weight: 700; /* Bold */
+    font-size: 18px;
+    margin-bottom: 24px;
+    text-decoration: underline;
+}
+
+/* Restore numbered list and remove internal separators */
+.deep-dive-list {
+    list-style-type: decimal;
+    padding-left: 20px;
+}
+.deep-dive-list li {
+    padding-bottom: 0;
+    margin-bottom: 16px;
+    border-bottom: none;
 }
 
 /* Responsive adjustments for smaller screens (NO LONGER NEEDED) */

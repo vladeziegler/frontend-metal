@@ -28,9 +28,7 @@ const ImportedNewsletter = () => {
               <span className="new-logo-text-reinvented">Reinvented</span>
             </div>
           </div>
-
           <h1 className="imported-newsletter-title">MOMENTUM</h1>
-          
           <div className="by-backbase-wrapper">
             <span>by Backbase</span>
           </div>
@@ -38,7 +36,7 @@ const ImportedNewsletter = () => {
 
         <div className="imported-newsletter-content-section">
             <div className="imported-newsletter-section-body">
-                Recently, we&apos;ve observed a significant shift in the investment landscape, with Venture Capitalists (VCs) championing a new M&A strategy known as &apos;Vertical AI Roll-Ups.&apos; This approach involves VCs acquiring traditional service businesses and embedding AI technology to unlock efficiencies and drive transformative growth. Unlike traditional private equity roll-ups focused on consolidation and cost-cutting, these AI-driven strategies prioritize technology-led value creation. This development is crucial for us as banking leaders, and in this newsletter, we&apos;ll explore why these AI roll-ups matter, their potential second-order effects, and the opportunities they present for our industry.
+                Recently, we&apos;ve observed a significant shift in the investment landscape, with Venture Capitalists (VCs) championing a new M&A strategy known as &apos;Vertical AI Roll-Ups.&apos; This approach involves VCs acquiring traditional service businesses and embedding AI technology to unlock efficiencies and drive transformative growth. Unlike traditional private equity roll-ups focused on consolidation and cost-cutting, these AI-driven strategies prioritize technology-led value creation. This development is crucial for us as banking leaders, and in this newsletter, we&apos;ll explore why these AI-roll-ups matter, their potential second-order effects, and the opportunities they present for our industry.
             </div>
         </div>
 
@@ -63,7 +61,7 @@ const ImportedNewsletter = () => {
         </div>
 
         <div className="imported-newsletter-author-section">
-            <Image src="/timProfilePic.png" alt="Tim Rutten" width={100} height={100} className="imported-newsletter-author-image" />
+            <Image src="/TimImageSVG.svg" alt="Tim Rutten" width={100} height={100} className="imported-newsletter-author-image" />
             <div className="imported-newsletter-author-details">
                 <strong>Tim Rutten</strong><br/>
                 Chief Marketing Officer, Backbase<br/>
@@ -71,7 +69,7 @@ const ImportedNewsletter = () => {
             </div>
         </div>
         <p className="subscribe-paragraph">
-          Ps. Did you get this email forwarded? Subscribe <a href="https://www.backbase.com/strategy-call" target="_blank" rel="noopener noreferrer">here</a>
+          Ps. Did you get this email forwarded? Subscribe <a href="https://www.linkedin.com/in/timrutten" target="_blank" rel="noopener noreferrer">here</a>
         </p>
 
 
