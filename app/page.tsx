@@ -572,14 +572,14 @@ export default function NewsletterGenerator() {
                                   <>🔄 Regenerate with Notes</>
                                 )}
                               </Button>
-                              <Button
+                              {/* <Button
                                 onClick={() => setIsPreviewOpen(true)}
                                 variant="default"
                                 size="lg"
                                 className="bg-blue-600 hover:bg-blue-700"
                               >
                                 🚀 Preview Final Newsletter
-                              </Button>
+                              </Button> */}
                               <Button
                                 onClick={handleDownloadImportedNewsletter}
                                 variant="outline"
