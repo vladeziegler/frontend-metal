@@ -5,6 +5,17 @@ const nextConfig: NextConfig = {
   // Any empty webpack callback disables Turbopack in dev, keeps Webpack
   webpack: (config) => config,
 
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'ik.imagekit.io',
+        port: '',
+        pathname: '/**',
+      },
+    ],
+  },
+
   async rewrites() {
     return [
       // Silent session-management iframe

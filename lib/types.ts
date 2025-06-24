@@ -86,11 +86,4 @@ export interface MetaSuggestion {
   is_chosen: boolean;
   created_at: string; 
   chosen_at?: string | null; 
-}
-
-// Type for the data expected by the deep dive generation endpoint
-export interface DeepDiveInputData {
-  // ... existing code ...
-}
-
-// Removed duplicate/conflicting definitions below this line by ensuring the above are authoritative. 
+} 

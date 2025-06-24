@@ -1,6 +1,7 @@
 "use client"
 
 import React, { useEffect, useState } from 'react';
+import ReactDOMServer from 'react-dom/server';
 import { useTopicStore } from '@/lib/store/topicStore'; // Assuming @ is configured for src/ or lib/
 import { useOutlineStore } from '@/lib/store/outlineStore'; // Adjust path as needed
 import { useNewsletterStore } from '@/lib/store/newsletterStore'; // Import the new store
@@ -10,10 +11,10 @@ import JobTrackingDisplay from '@/components/JobTrackingDisplay';
 // Import UI components
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { CheckCircle, FileText, Edit3, Send, AlertTriangle, Loader2 } from 'lucide-react'; // For icons
+import { CheckCircle, FileText, Edit3, Send, AlertTriangle, Loader2, Download } from 'lucide-react'; // For icons
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import ImportedNewsletter from '@/components/ImportedNewsletter';
 
 // NEW: Import DeepDiveDisplay component
@@ -25,6 +26,7 @@ import { UnauthorizedModal } from '@/components/UnauthorizedModal';
 import { useDeepDiveStore } from '@/lib/store/deepDiveStore';
 import { useEventsStore } from '@/lib/store/eventsStore';
 import { useJobTrackingStore } from '@/lib/store/jobTrackingStore';
+import StaticImportedNewsletter from '@/components/StaticImportedNewsletter';
 
 // Helper component for displaying individual outline sections
 const DisplayOutlineSection: React.FC<{ section?: ArticleOutlineSection | null, defaultTitle: string }> = ({ section, defaultTitle }) => {
@@ -111,6 +113,7 @@ export default function NewsletterGenerator() {
   const [step, setStep] = useState<"select" | "outline" | "writing">("select");
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
   const [isImportedPreviewOpen, setIsImportedPreviewOpen] = useState(false);
+  const [isDownloading, setIsDownloading] = useState(false);
 
   // Zustand store integration
   const {
@@ -150,7 +153,6 @@ export default function NewsletterGenerator() {
     regenerateNewsletterError,
   } = useNewsletterStore();
 
-  const newsletterStore = useNewsletterStore(); // Get the full store instance
   const { user, authStatus, signOut } = useAuth();
 
   // New store subscriptions
@@ -234,17 +236,69 @@ export default function NewsletterGenerator() {
   // Determine the currently selected topic object from the topics list
   const currentSelectedTopic = topics.find(t => t.id === selectedTopicId);
 
-  const handleFinalize = () => {
-    // Logic to finalize the newsletter
-    console.log("Newsletter finalized!");
-    setIsPreviewOpen(true); // Open the preview modal on finalization
-  };
-
   const handleOpenImportedPreview = () => {
     setIsImportedPreviewOpen(true);
   };
   
   const isLoadingPreview = isLoadingNewsletter || isLoadingDeepDives || isLoadingEvents || isLoadingJobs;
+
+  const handleDownloadImportedNewsletter = async () => {
+    if (!generatedNewsletter) return;
+
+    try {
+      setIsDownloading(true);
+
+      // Read the complete CSS from the actual file
+      const response = await fetch('/imported-newsletter.css');
+      const importedNewsletterCSS = await response.text();
+
+      // Render the static newsletter component to HTML
+      const newsletterHTML = ReactDOMServer.renderToStaticMarkup(
+        <StaticImportedNewsletter
+          newsletter={generatedNewsletter}
+          deepDives={deepDives}
+          jobTrackingEntries={jobTrackingEntries}
+          upcomingEvents={events}
+        />
+      );
+
+      // Create complete HTML document with embedded CSS
+      const completeHTML = `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Imported Newsletter</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        ${importedNewsletterCSS}
+    </style>
+</head>
+<body>
+    ${newsletterHTML}
+</body>
+</html>`;
+
+      // Create and download the file
+      const blob = new Blob([completeHTML], { type: 'text/html' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'imported-newsletter.html';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+
+    } catch (error) {
+      console.error('Error downloading newsletter:', error);
+    } finally {
+      setIsDownloading(false);
+    }
+  };
 
   return (
     <>
@@ -453,7 +507,7 @@ export default function NewsletterGenerator() {
                               disabled={isLoadingNewsletter || isLoadingOutline}
                               className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 text-lg"
                         >
-                              {isLoadingNewsletter ? <><Loader2 className="mr-2 h-4 w-4 animate-spin"/> Generating Newsletter...</> : "Generate Final Newsletter"}
+                              {isLoadingNewsletter ? <><Loader2 className="mr-2 h-4 animate-spin"/> Generating Newsletter...</> : "Generate Final Newsletter"}
                         </Button>
                               {errorNewsletter && <p className="text-red-500 mt-2">Error generating newsletter: {errorNewsletter}</p>}
                             </div>
@@ -494,14 +548,14 @@ export default function NewsletterGenerator() {
                                 <AlertTriangle className="inline-block mr-1 h-4 w-4" /> Error saving notes: {saveEditorNotesError}
                               </p>
                             )}
-                            <div className="mt-4 flex space-x-3">
+                            <div className="mt-4 flex flex-wrap gap-3">
                               <Button 
                                 onClick={() => saveEditorNotes(generatedNewsletter.id)}
                                 disabled={isSavingEditorNotes || isRegeneratingNewsletter || editorNotesInput === (generatedNewsletter.editor_notes || '')}
                                 size="lg"
                               >
                                 {isSavingEditorNotes ? (
-                                  <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Saving...</>
+                                  <><Loader2 className="mr-2 h-4 animate-spin" /> Saving...</>
                                 ) : (
                                   <>💾 Save Notes</>
                                 )}
@@ -513,7 +567,7 @@ export default function NewsletterGenerator() {
                                 size="lg"
                               >
                                 {isRegeneratingNewsletter ? (
-                                  <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Regenerating...</>
+                                  <><Loader2 className="mr-2 h-4 animate-spin" /> Regenerating...</>
                                 ) : (
                                   <>🔄 Regenerate with Notes</>
                                 )}
@@ -525,6 +579,16 @@ export default function NewsletterGenerator() {
                                 className="bg-blue-600 hover:bg-blue-700"
                               >
                                 🚀 Preview Final Newsletter
+                              </Button>
+                              <Button
+                                onClick={handleDownloadImportedNewsletter}
+                                variant="outline"
+                                size="lg"
+                                disabled={!generatedNewsletter || isDownloading}
+                                className="bg-green-50 border-green-500 text-green-700 hover:bg-green-100"
+                              >
+                                <Download className="mr-2 h-4 w-4" />
+                                {isDownloading ? 'Downloading...' : 'Download HTML'}
                               </Button>
                             </div>
                             {regenerateNewsletterError && (
@@ -610,8 +674,8 @@ export default function NewsletterGenerator() {
                             <ImportedNewsletter
                               newsletter={generatedNewsletter}
                               deepDives={deepDives}
-                              upcomingEvents={events}
                               jobTrackingEntries={jobTrackingEntries}
+                              upcomingEvents={events}
                             />
                           )}
                         </div>

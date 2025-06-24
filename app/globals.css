@@ -354,6 +354,7 @@ NEWSLETTER COMPONENT STYLES
 
 .newsletter-takeaway {
   font-weight: bold;
+  font-size: 16px;
 }
 
 /* --- Slide of the Week --- */
@@ -363,51 +364,6 @@ NEWSLETTER COMPONENT STYLES
 .slide-image {
     width: 100%;
     border: 1px solid #f5f5f5;
-}
-
-/* --- Podcast Section --- */
-.imported-newsletter-podcast-section {
-    display: flex;
-    margin: 50px 0;
-    padding-bottom: 50px;
-    border-bottom: 1px solid #E0E6EB;
-}
-
-.imported-newsletter-podcast-image-container {
-    width: 150px;
-    height: 150px;
-    background: #000;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    color: #fff;
-    flex-shrink: 0;
-    padding: 20px;
-}
-.podcast-reimagined-text-container {
-    margin-top: 10px;
-}
-.podcast-reimagined-title {
-    display: block;
-    font-size: 18px;
-    line-height: 1.2;
-}
-.podcast-reimagined-subtext {
-    margin-top: 10px;
-    font-size: 11px;
-    color: #69FEFF;
-}
-
-.imported-newsletter-podcast-details {
-    background: #A5FEFF;
-    padding: 16px 34px;
-    flex-grow: 1;
-    font-size: 14px;
-}
-.imported-newsletter-podcast-details strong {
-    font-size: 20px;
-    font-weight: bold;
 }
 
 /* --- Movers, Shakers & Events --- */

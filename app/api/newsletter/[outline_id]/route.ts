@@ -10,9 +10,9 @@ import { NextResponse } from 'next/server';
 
 export async function GET(
   request: Request,
-  { params }: { params: { outline_id: string } }
+  { params }: { params: Promise<{ outline_id: string }> }
 ) {
-  const { outline_id } = params;
+  const { outline_id } = await params;
 
   // Mock data for now, mirroring the structure of the hardcoded component
   const mockNewsletterData = {

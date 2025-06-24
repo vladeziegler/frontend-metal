@@ -1,17 +1,11 @@
 import React from 'react';
-import Image from 'next/image';
 import { GeneratedNewsletterData, ContentSection } from '@/lib/types';
 import { DeepDiveState } from '@/lib/store/deepDiveStore';
 import { JobTrackingEntry } from '@/lib/store/jobTrackingStore';
 import { UpcomingEvent } from '@/lib/store/eventsStore';
 
-// No longer using next/image for the logos
-// import Image from 'next/image';
-
-// This component is a structural representation of the provided HTML.
-// It uses the classes from imported-newsletter.css.
-// For now, content is hardcoded to match the original design.
-// It can be refactored later to accept props for dynamic content.
+// Static version of ImportedNewsletter for HTML generation
+// Uses standard img tags instead of Next.js Image components
 
 // Helper to format dates consistently
 const formatDate = (dateString: string | null | undefined) => {
@@ -20,14 +14,14 @@ const formatDate = (dateString: string | null | undefined) => {
     return date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
 };
 
-interface ImportedNewsletterProps {
+interface StaticImportedNewsletterProps {
   newsletter: GeneratedNewsletterData | null;
   deepDives: DeepDiveState['deepDives'];
   jobTrackingEntries: JobTrackingEntry[];
   upcomingEvents: UpcomingEvent[];
 }
 
-const ImportedNewsletter: React.FC<ImportedNewsletterProps> = ({ 
+const StaticImportedNewsletter: React.FC<StaticImportedNewsletterProps> = ({ 
   newsletter,
   deepDives,
   jobTrackingEntries,
@@ -72,11 +66,11 @@ const ImportedNewsletter: React.FC<ImportedNewsletterProps> = ({
 
         <div className="corrected-header-container">
           <div className="new-logo">
-            <Image
+            <img
               src="https://ik.imagekit.io/h3u86kveh/BackbaseLogoSVG.svg?updatedAt=1750756425736"
               alt="Backbase Logo"
-              width={25}
-              height={25}
+              width="25"
+              height="25"
               className="backbase-logo-img"
             />
             <div className="new-logo-text">
@@ -87,11 +81,11 @@ const ImportedNewsletter: React.FC<ImportedNewsletterProps> = ({
           <h1 className="imported-newsletter-title">MOMENTUM</h1>
           <div className="by-backbase-wrapper">
             <span>by </span>
-            <Image
+            <img
               src="https://ik.imagekit.io/h3u86kveh/BackBaseLogoSVGTEXT.svg?updatedAt=1750756501656"
               alt="Backbase"
-              width={60}
-              height={16}
+              width="60"
+              height="16"
               className="backbase-text-logo"
             />
           </div>
@@ -125,7 +119,13 @@ const ImportedNewsletter: React.FC<ImportedNewsletterProps> = ({
         )}
 
         <div className="imported-newsletter-author-section">
-            <Image src="https://ik.imagekit.io/h3u86kveh/TimImageSVG.svg?updatedAt=1750756286589" alt="Tim Rutten" width={100} height={100} className="imported-newsletter-author-image" />
+            <img 
+              src="https://ik.imagekit.io/h3u86kveh/TimImageSVG.svg?updatedAt=1750756286589" 
+              alt="Tim Rutten" 
+              width="100" 
+              height="100" 
+              className="imported-newsletter-author-image" 
+            />
             <div className="imported-newsletter-author-details">
                 <strong>Tim Rutten</strong><br/>
                 Chief Marketing Officer, Backbase<br/>
@@ -139,7 +139,13 @@ const ImportedNewsletter: React.FC<ImportedNewsletterProps> = ({
 
         <div className="imported-newsletter-slide-section">
             <h2 className="imported-newsletter-section-highlight">Slide of the week</h2>
-            <Image src="https://ik.imagekit.io/h3u86kveh/Slideoftheweek.png?updatedAt=1750756399393&f=jpg" alt="Slide of the week" width={516} height={288} className="slide-image" />
+            <img 
+              src="https://ik.imagekit.io/h3u86kveh/Slideoftheweek.png?updatedAt=1750756399393&f=jpg" 
+              alt="Slide of the week" 
+              width="516" 
+              height="288" 
+              className="slide-image" 
+            />
         </div>
 
         {/* --- DYNAMIC DEEP DIVE SECTION (Robust Implementation) --- */}
@@ -169,7 +175,12 @@ const ImportedNewsletter: React.FC<ImportedNewsletterProps> = ({
         <div className="imported-newsletter-podcast-section">
             <div className="imported-newsletter-podcast-image-container">
                 <div className="podcast-reimagined-content">
-                    <Image src="https://ik.imagekit.io/h3u86kveh/Waves.svg?updatedAt=1750756342031" alt="Podcast soundwave" width={37} height={17} />
+                    <img 
+                      src="https://ik.imagekit.io/h3u86kveh/Waves.svg?updatedAt=1750756342031" 
+                      alt="Podcast soundwave" 
+                      width="37" 
+                      height="17" 
+                    />
                     <div className="podcast-reimagined-text-container">
                         <span className="podcast-reimagined-title">Banking</span>
                         <span className="podcast-reimagined-title">Reinvented</span>
@@ -244,4 +255,4 @@ const ImportedNewsletter: React.FC<ImportedNewsletterProps> = ({
   );
 };
 
-export default ImportedNewsletter; 
+export default StaticImportedNewsletter; 
