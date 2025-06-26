@@ -198,8 +198,19 @@ const ImportedNewsletter: React.FC<ImportedNewsletterProps> = ({
                 <ul className="imported-newsletter-list movers-shakers-list">
                     {jobTrackingEntries.map(entry => (
                         <li key={entry.id}>
-                            <strong>{entry.full_name}</strong>
-                            &nbsp;joins&nbsp;{entry.bank_name}&nbsp;as&nbsp;{entry.role_title}
+                            {entry.news_source_url ? (
+                                <>
+                                    <a href={entry.news_source_url} target="_blank" rel="noopener noreferrer" style={{color: '#3366FF'}}>
+                                        {entry.full_name}
+                                    </a>
+                                    &nbsp;joins&nbsp;{entry.bank_name}&nbsp;as&nbsp;{entry.role_title}
+                                </>
+                            ) : (
+                                <>
+                                    <strong>{entry.full_name}</strong>
+                                    &nbsp;joins&nbsp;{entry.bank_name}&nbsp;as&nbsp;{entry.role_title}
+                                </>
+                            )}
                         </li>
                     ))}
                 </ul>
@@ -213,7 +224,9 @@ const ImportedNewsletter: React.FC<ImportedNewsletterProps> = ({
                 <ul className="imported-newsletter-list">
                     {upcomingEvents.map(event => (
                         <li key={event.id}>
-                            <strong>{event['Event Name']}</strong>
+                            <a href="https://www.backbase.com/events" target="_blank" rel="noopener noreferrer" style={{color: '#3366FF'}}>
+                                {event['Event Name']}
+                            </a>
                             &nbsp; • &nbsp;{formatDate(event['Event Date'])}, {event.Territory}
                         </li>
                     ))}

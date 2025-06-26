@@ -42,7 +42,7 @@ const StaticImportedNewsletter: React.FC<StaticImportedNewsletterProps> = ({
     if (!section || !section.title || !section.content) return null;
     return (
       <div className="imported-newsletter-content-section">
-        <h2 className="imported-newsletter-section-title">{section.title}</h2>
+        <h2 className="imported-newsletter-section-title">{toSentenceCase(section.title)}</h2>
         <div className="imported-newsletter-section-body" dangerouslySetInnerHTML={{ __html: section.content }} />
       </div>
     );
@@ -70,12 +70,26 @@ const StaticImportedNewsletter: React.FC<StaticImportedNewsletterProps> = ({
     }
   };
 
-  // Helper function to render deep dive title with optional URL
+  // Helper function to convert title case to sentence case
+  const toSentenceCase = (text: string): string => {
+    if (!text) return '';
+    
+    // First apply basic sentence case
+    let result = text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
+    
+    // Then preserve "AI" in all caps wherever it appears
+    result = result.replace(/\bai\b/gi, 'AI');
+    
+    return result;
+  };
+
+  // Helper function to render deep dive title with optional URL (without bold)
   const renderDeepDiveTitle = (title: string, sourceUrl?: string | null) => {
+    const sentenceCaseTitle = toSentenceCase(title);
     if (sourceUrl) {
-      return `<a href="${sourceUrl}" target="_blank" rel="noopener noreferrer"><strong>${title}:</strong></a>`;
+      return `<a href="${sourceUrl}" target="_blank" rel="noopener noreferrer" style="color: #3366FF;">${sentenceCaseTitle}:</a>`;
     } else {
-      return `<strong>${title}:</strong>`;
+      return `${sentenceCaseTitle}:`;
     }
   };
 
@@ -244,8 +258,19 @@ const StaticImportedNewsletter: React.FC<StaticImportedNewsletterProps> = ({
                 <ul className="imported-newsletter-list movers-shakers-list">
                     {jobTrackingEntries.map(entry => (
                         <li key={entry.id}>
-                            <strong>{entry.full_name}</strong>
-                            &nbsp;joins&nbsp;{entry.bank_name}&nbsp;as&nbsp;{entry.role_title}
+                            {entry.news_source_url ? (
+                                <>
+                                    <a href={entry.news_source_url} target="_blank" rel="noopener noreferrer" style={{color: '#3366FF'}}>
+                                        {entry.full_name}
+                                    </a>
+                                    &nbsp;joins&nbsp;{entry.bank_name}&nbsp;as&nbsp;{entry.role_title}
+                                </>
+                            ) : (
+                                <>
+                                    <strong>{entry.full_name}</strong>
+                                    &nbsp;joins&nbsp;{entry.bank_name}&nbsp;as&nbsp;{entry.role_title}
+                                </>
+                            )}
                         </li>
                     ))}
                 </ul>
@@ -259,7 +284,9 @@ const StaticImportedNewsletter: React.FC<StaticImportedNewsletterProps> = ({
                 <ul className="imported-newsletter-list">
                     {upcomingEvents.map(event => (
                         <li key={event.id}>
-                            <strong>{event['Event Name']}</strong>
+                            <a href="https://www.backbase.com/events" target="_blank" rel="noopener noreferrer" style={{color: '#3366FF'}}>
+                                {event['Event Name']}
+                            </a>
                             &nbsp; • &nbsp;{formatDate(event['Event Date'])}, {event.Territory}
                         </li>
                     ))}
