@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 
 export async function GET() {
   // Ensure the backend URL is configured in your environment variables
-  const FASTAPI_BASE_URL = 'http://localhost:8080';
+  const FASTAPI_BASE_URL = process.env.NEXT_PUBLIC_FASTAPI_BASE_URL || 'http://localhost:8080';
 
   try {
     const response = await fetch(`${FASTAPI_BASE_URL}/events/upcoming`, {
