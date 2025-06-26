@@ -14,7 +14,7 @@ export async function GET(
 
   try {
     const fastApiResponse = await fetch(
-      `${FASTAPI_BASE_URL}/deep-dives/${metaSuggestionId}`,
+      `${FASTAPI_BASE_URL}/deep-dives/${metaSuggestionId}/with-urls`,
       {
         method: 'GET',
         headers: {
@@ -27,9 +27,9 @@ export async function GET(
 
     if (!fastApiResponse.ok) {
       const errorBody = await fastApiResponse.text();
-      console.error(`FastAPI error (${fastApiResponse.status}) fetching deep dives for metaSuggestionId ${metaSuggestionId}:`, errorBody);
+      console.error(`FastAPI error (${fastApiResponse.status}) fetching deep dives with URLs for metaSuggestionId ${metaSuggestionId}:`, errorBody);
       return NextResponse.json(
-        { error: `Failed to fetch deep dives: ${errorBody || fastApiResponse.statusText}` },
+        { error: `Failed to fetch deep dives with URLs: ${errorBody || fastApiResponse.statusText}` },
         { status: fastApiResponse.status }
       );
     }
@@ -38,11 +38,11 @@ export async function GET(
     return NextResponse.json(data);
 
   } catch (error) {
-    console.error(`Error in GET /api/deep-dives/[metaSuggestionId] for ID ${metaSuggestionId}:`, error);
+    console.error(`Error in GET /api/deep-dives/[metaSuggestionId]/with-urls for ID ${metaSuggestionId}:`, error);
     let message = 'Internal Server Error';
     if (error instanceof Error) {
         message = error.message;
     }
-    return NextResponse.json({ error: 'Failed to process request to fetch deep dives', details: message }, { status: 500 });
+    return NextResponse.json({ error: 'Failed to process request to fetch deep dives with URLs', details: message }, { status: 500 });
   }
 } 

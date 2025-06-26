@@ -155,8 +155,8 @@ export default function NewsletterGenerator() {
 
   const { user, authStatus, signOut } = useAuth();
 
-  // New store subscriptions
-  const { deepDives, isLoading: isLoadingDeepDives, fetchDeepDives } = useDeepDiveStore();
+  // New store subscriptions - only use deepDivesWithUrls
+  const { deepDivesWithUrls, isLoading: isLoadingDeepDives, fetchDeepDivesWithUrls } = useDeepDiveStore();
   const { events, isLoading: isLoadingEvents, fetchUpcomingEvents } = useEventsStore();
   const { entries: jobTrackingEntries, isLoading: isLoadingJobs, fetchJobTrackingEntries } = useJobTrackingStore();
 
@@ -170,9 +170,9 @@ export default function NewsletterGenerator() {
   // NEW: Effect to fetch deep dives when a topic is selected
   useEffect(() => {
     if (selectedTopicId) {
-      fetchDeepDives(selectedTopicId);
+      fetchDeepDivesWithUrls(selectedTopicId);
     }
-  }, [selectedTopicId, fetchDeepDives]);
+  }, [selectedTopicId, fetchDeepDivesWithUrls]);
 
   // Effect to move to outline step when outline is loaded for the selected topic
   useEffect(() => {
@@ -256,7 +256,7 @@ export default function NewsletterGenerator() {
       const newsletterHTML = ReactDOMServer.renderToStaticMarkup(
         <StaticImportedNewsletter
           newsletter={generatedNewsletter}
-          deepDives={deepDives}
+          deepDivesWithUrls={deepDivesWithUrls}
           jobTrackingEntries={jobTrackingEntries}
           upcomingEvents={events}
         />
@@ -673,7 +673,7 @@ export default function NewsletterGenerator() {
                           ) : (
                             <ImportedNewsletter
                               newsletter={generatedNewsletter}
-                              deepDives={deepDives}
+                              deepDives={null}
                               jobTrackingEntries={jobTrackingEntries}
                               upcomingEvents={events}
                             />

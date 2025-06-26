@@ -39,11 +39,36 @@ export interface AllDeepDivesForMetaSuggestionResponse {
   podcast_deep_dive: DeepDivePodcast | null;
 }
 
+// New interfaces for deep dives with URLs
+export interface DeepDiveArticleWithUrl extends DeepDiveBase {
+  original_article_id: number;
+  source_url: string | null;
+}
+
+export interface DeepDiveResearchWithUrl extends DeepDiveBase {
+  original_research_report_id: number;
+  source_url: string | null;
+}
+
+export interface DeepDivePodcastWithUrl extends DeepDiveBase {
+  original_podcast_episode_id: number;
+  source_url: string | null;
+}
+
+export interface AllDeepDivesWithUrlsForMetaSuggestionResponse {
+  meta_suggestion_id: number;
+  article_deep_dive: DeepDiveArticleWithUrl | null;
+  research_deep_dive: DeepDiveResearchWithUrl | null;
+  podcast_deep_dive: DeepDivePodcastWithUrl | null;
+}
+
 export interface DeepDiveState {
   deepDives: AllDeepDivesForMetaSuggestionResponse | null;
+  deepDivesWithUrls: AllDeepDivesWithUrlsForMetaSuggestionResponse | null;
   isLoading: boolean;
   error: string | null;
   fetchDeepDives: (metaSuggestionId: number) => Promise<void>;
+  fetchDeepDivesWithUrls: (metaSuggestionId: number) => Promise<void>;
   clearDeepDives: () => void;
 }
 
@@ -51,6 +76,7 @@ export const useDeepDiveStore = create<DeepDiveState>()(
   devtools(
     (set) => ({
       deepDives: null,
+      deepDivesWithUrls: null,
       isLoading: false,
       error: null,
 
@@ -75,8 +101,29 @@ export const useDeepDiveStore = create<DeepDiveState>()(
         }
       },
 
+      fetchDeepDivesWithUrls: async (metaSuggestionId: number) => {
+        if (!metaSuggestionId) {
+          set({ error: 'Meta Suggestion ID is required to fetch deep dives with URLs.', isLoading: false });
+          return;
+        }
+        set({ isLoading: true, error: null, deepDivesWithUrls: null });
+        try {
+          const response = await fetch(`/api/deep-dives/${metaSuggestionId}/with-urls`);
+          if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.error || `Failed to fetch deep dives with URLs: ${response.statusText}`);
+          }
+          const data: AllDeepDivesWithUrlsForMetaSuggestionResponse = await response.json();
+          set({ deepDivesWithUrls: data, isLoading: false });
+        } catch (error) {
+          const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred';
+          console.error("Error fetching deep dives with URLs:", errorMessage);
+          set({ error: errorMessage, isLoading: false, deepDivesWithUrls: null });
+        }
+      },
+
       clearDeepDives: () => {
-        set({ deepDives: null, error: null, isLoading: false });
+        set({ deepDives: null, deepDivesWithUrls: null, error: null, isLoading: false });
       },
     }),
     { name: 'deepDiveStore' }

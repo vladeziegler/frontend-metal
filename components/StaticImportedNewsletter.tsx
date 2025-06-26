@@ -1,6 +1,6 @@
 import React from 'react';
 import { GeneratedNewsletterData, ContentSection } from '@/lib/types';
-import { DeepDiveState } from '@/lib/store/deepDiveStore';
+import { AllDeepDivesWithUrlsForMetaSuggestionResponse } from '@/lib/store/deepDiveStore';
 import { JobTrackingEntry } from '@/lib/store/jobTrackingStore';
 import { UpcomingEvent } from '@/lib/store/eventsStore';
 
@@ -16,17 +16,27 @@ const formatDate = (dateString: string | null | undefined) => {
 
 interface StaticImportedNewsletterProps {
   newsletter: GeneratedNewsletterData | null;
-  deepDives: DeepDiveState['deepDives'];
+  deepDivesWithUrls: AllDeepDivesWithUrlsForMetaSuggestionResponse | null;
   jobTrackingEntries: JobTrackingEntry[];
   upcomingEvents: UpcomingEvent[];
 }
 
 const StaticImportedNewsletter: React.FC<StaticImportedNewsletterProps> = ({ 
   newsletter,
-  deepDives,
+  deepDivesWithUrls,
   jobTrackingEntries,
   upcomingEvents,
 }) => {
+  // Always use deepDivesWithUrls - single source of truth
+  const activeDives = deepDivesWithUrls;
+  
+  // Debug logging to understand data structure
+  console.log('StaticImportedNewsletter Debug:', {
+    hasDeepDivesWithUrls: !!deepDivesWithUrls,
+    articleDeepDive: activeDives?.article_deep_dive,
+    articleSourceUrl: activeDives?.article_deep_dive ? (activeDives.article_deep_dive as { source_url?: string }).source_url : undefined
+  });
+
   // A helper function to render a section robustly, preventing errors if data is missing
   const renderSection = (section: ContentSection) => {
     if (!section || !section.title || !section.content) return null;
@@ -58,6 +68,31 @@ const StaticImportedNewsletter: React.FC<StaticImportedNewsletterProps> = ({
       // If no sentence ending found, make the whole thing bold
       return `<strong>${editorNotes}</strong>`;
     }
+  };
+
+  // Helper function to render deep dive title with optional URL
+  const renderDeepDiveTitle = (title: string, sourceUrl?: string | null) => {
+    if (sourceUrl) {
+      return `<a href="${sourceUrl}" target="_blank" rel="noopener noreferrer"><strong>${title}:</strong></a>`;
+    } else {
+      return `<strong>${title}:</strong>`;
+    }
+  };
+
+  // Helper function to safely get source URL from deep dive item
+  const getSourceUrl = (item: { source_url?: string | null } | null | undefined): string | null => {
+    return item?.source_url || null;
+  };
+
+  // Helper function to render deep dive content safely
+  const renderDeepDiveContent = (item: { deep_dive_title?: string; deep_dive_content?: string; source_url?: string | null } | null | undefined): string => {
+    if (!item) return '';
+    
+    const sourceUrl = getSourceUrl(item);
+    const titleHtml = renderDeepDiveTitle(item.deep_dive_title || '', sourceUrl);
+    const content = item.deep_dive_content || '';
+    
+    return `${titleHtml} ${content}`;
   };
 
   return (
@@ -149,23 +184,23 @@ const StaticImportedNewsletter: React.FC<StaticImportedNewsletterProps> = ({
         </div>
 
         {/* --- DYNAMIC DEEP DIVE SECTION (Robust Implementation) --- */}
-        {(deepDives?.article_deep_dive || deepDives?.research_deep_dive || deepDives?.podcast_deep_dive) && (
+        {(activeDives?.article_deep_dive || activeDives?.research_deep_dive || activeDives?.podcast_deep_dive) && (
             <div className="imported-newsletter-content-section deep-dive-section">
                 <h2 className="imported-newsletter-section-highlight">This made us think</h2>
                 <ol className="imported-newsletter-list deep-dive-list">
-                    {deepDives?.article_deep_dive && (
+                    {activeDives?.article_deep_dive && (
                         <li>
-                           <p dangerouslySetInnerHTML={{ __html: `<strong>${deepDives.article_deep_dive.deep_dive_title}:</strong> ${deepDives.article_deep_dive.deep_dive_content}` }} />
+                           <p dangerouslySetInnerHTML={{ __html: renderDeepDiveContent(activeDives.article_deep_dive) }} />
                         </li>
                     )}
-                    {deepDives?.research_deep_dive && (
+                    {activeDives?.research_deep_dive && (
                          <li>
-                           <p dangerouslySetInnerHTML={{ __html: `<strong>${deepDives.research_deep_dive.deep_dive_title}:</strong> ${deepDives.research_deep_dive.deep_dive_content}` }} />
+                           <p dangerouslySetInnerHTML={{ __html: renderDeepDiveContent(activeDives.research_deep_dive) }} />
                         </li>
                     )}
-                    {deepDives?.podcast_deep_dive && (
+                    {activeDives?.podcast_deep_dive && (
                          <li>
-                           <p dangerouslySetInnerHTML={{ __html: `<strong>${deepDives.podcast_deep_dive.deep_dive_title}:</strong> ${deepDives.podcast_deep_dive.deep_dive_content}` }} />
+                           <p dangerouslySetInnerHTML={{ __html: renderDeepDiveContent(activeDives.podcast_deep_dive) }} />
                         </li>
                     )}
                 </ol>
