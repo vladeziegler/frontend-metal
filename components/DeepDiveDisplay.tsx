@@ -23,11 +23,11 @@ const DeepDiveSection: React.FC<{ title: string; content: string | undefined | n
 };
 
 const DeepDiveDisplay: React.FC<DeepDiveDisplayProps> = ({ metaSuggestionId }) => {
-  const { deepDives, isLoading, error, fetchDeepDives, clearDeepDives } = useDeepDiveStore();
+  const { deepDivesWithUrls, isLoading, error, fetchDeepDivesWithUrls, clearDeepDives } = useDeepDiveStore();
 
   useEffect(() => {
     if (metaSuggestionId && metaSuggestionId > 0) {
-      fetchDeepDives(metaSuggestionId);
+      fetchDeepDivesWithUrls(metaSuggestionId);
     } else {
       clearDeepDives();
     }
@@ -35,7 +35,7 @@ const DeepDiveDisplay: React.FC<DeepDiveDisplayProps> = ({ metaSuggestionId }) =
     return () => {
       // clearDeepDives(); // Uncomment if you want to clear data each time ID changes or component unmounts
     };
-  }, [metaSuggestionId, fetchDeepDives, clearDeepDives]);
+  }, [metaSuggestionId, fetchDeepDivesWithUrls, clearDeepDives]);
 
   if (!metaSuggestionId || metaSuggestionId <= 0) {
     // Don't render anything if no valid metaSuggestionId is provided
@@ -55,7 +55,7 @@ const DeepDiveDisplay: React.FC<DeepDiveDisplayProps> = ({ metaSuggestionId }) =
     return <div className="p-6 text-red-600 bg-red-50 border border-red-300 rounded-md">Error fetching deep dive content: {error}</div>;
   }
 
-  if (!deepDives || (!deepDives.article_deep_dive && !deepDives.research_deep_dive && !deepDives.podcast_deep_dive)) {
+  if (!deepDivesWithUrls || (!deepDivesWithUrls.article_deep_dive && !deepDivesWithUrls.research_deep_dive && !deepDivesWithUrls.podcast_deep_dive)) {
     return (
       <div className="p-6 text-gray-500 bg-gray-50 border border-gray-200 rounded-md">
         No deep dive content available for this topic yet. It might still be generating if a newsletter was recently created/regenerated.
@@ -66,25 +66,25 @@ const DeepDiveDisplay: React.FC<DeepDiveDisplayProps> = ({ metaSuggestionId }) =
   return (
     <div className="mt-8 py-6 border-t border-gray-200">
       <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">Automated Deep Dive Insights</h2>
-      {deepDives.article_deep_dive && (
+      {deepDivesWithUrls.article_deep_dive && (
         <DeepDiveSection 
           sectionTitle="Article Deep Dive"
-          title={deepDives.article_deep_dive.deep_dive_title}
-          content={deepDives.article_deep_dive.deep_dive_content}
+          title={deepDivesWithUrls.article_deep_dive.deep_dive_title}
+          content={deepDivesWithUrls.article_deep_dive.deep_dive_content}
         />
       )}
-      {deepDives.research_deep_dive && (
+      {deepDivesWithUrls.research_deep_dive && (
         <DeepDiveSection
           sectionTitle="Research Deep Dive"
-          title={deepDives.research_deep_dive.deep_dive_title}
-          content={deepDives.research_deep_dive.deep_dive_content}
+          title={deepDivesWithUrls.research_deep_dive.deep_dive_title}
+          content={deepDivesWithUrls.research_deep_dive.deep_dive_content}
         />
       )}
-      {deepDives.podcast_deep_dive && (
+      {deepDivesWithUrls.podcast_deep_dive && (
         <DeepDiveSection
           sectionTitle="Podcast Deep Dive"
-          title={deepDives.podcast_deep_dive.deep_dive_title}
-          content={deepDives.podcast_deep_dive.deep_dive_content}
+          title={deepDivesWithUrls.podcast_deep_dive.deep_dive_title}
+          content={deepDivesWithUrls.podcast_deep_dive.deep_dive_content}
         />
       )}
     </div>

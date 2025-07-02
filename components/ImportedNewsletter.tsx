@@ -1,7 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import { GeneratedNewsletterData, ContentSection } from '@/lib/types';
-import { DeepDiveState } from '@/lib/store/deepDiveStore';
+import { AllDeepDivesWithUrlsForMetaSuggestionResponse } from '@/lib/store/deepDiveStore';
 import { JobTrackingEntry } from '@/lib/store/jobTrackingStore';
 import { UpcomingEvent } from '@/lib/store/eventsStore';
 
@@ -22,14 +22,14 @@ const formatDate = (dateString: string | null | undefined) => {
 
 interface ImportedNewsletterProps {
   newsletter: GeneratedNewsletterData | null;
-  deepDives: DeepDiveState['deepDives'];
+  deepDivesWithUrls: AllDeepDivesWithUrlsForMetaSuggestionResponse | null;
   jobTrackingEntries: JobTrackingEntry[];
   upcomingEvents: UpcomingEvent[];
 }
 
 const ImportedNewsletter: React.FC<ImportedNewsletterProps> = ({ 
   newsletter,
-  deepDives,
+  deepDivesWithUrls,
   jobTrackingEntries,
   upcomingEvents,
 }) => {
@@ -64,6 +64,45 @@ const ImportedNewsletter: React.FC<ImportedNewsletterProps> = ({
       // If no sentence ending found, make the whole thing bold
       return `<strong>${editorNotes}</strong>`;
     }
+  };
+
+  // Helper function to convert title case to sentence case
+  const toSentenceCase = (text: string): string => {
+    if (!text) return '';
+    
+    // First apply basic sentence case
+    let result = text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
+    
+    // Then preserve "AI" in all caps wherever it appears
+    result = result.replace(/\bai\b/gi, 'AI');
+    
+    return result;
+  };
+
+  // Helper function to render deep dive title with optional URL
+  const renderDeepDiveTitle = (title: string, sourceUrl?: string | null) => {
+    const sentenceCaseTitle = toSentenceCase(title);
+    if (sourceUrl) {
+      return `<a href="${sourceUrl}" target="_blank" rel="noopener noreferrer" style="color: #3366FF;">${sentenceCaseTitle}:</a>`;
+    } else {
+      return `${sentenceCaseTitle}:`;
+    }
+  };
+
+  // Helper function to safely get source URL from deep dive item
+  const getSourceUrl = (item: { source_url?: string | null } | null | undefined): string | null => {
+    return item?.source_url || null;
+  };
+
+  // Helper function to render deep dive content safely
+  const renderDeepDiveContent = (item: { deep_dive_title?: string; deep_dive_content?: string; source_url?: string | null } | null | undefined): string => {
+    if (!item) return '';
+    
+    const sourceUrl = getSourceUrl(item);
+    const titleHtml = renderDeepDiveTitle(item.deep_dive_title || '', sourceUrl);
+    const content = item.deep_dive_content || '';
+    
+    return `${titleHtml} ${content}`;
   };
 
   return (
@@ -143,23 +182,23 @@ const ImportedNewsletter: React.FC<ImportedNewsletterProps> = ({
         </div>
 
         {/* --- DYNAMIC DEEP DIVE SECTION (Robust Implementation) --- */}
-        {(deepDives?.article_deep_dive || deepDives?.research_deep_dive || deepDives?.podcast_deep_dive) && (
+        {(deepDivesWithUrls?.article_deep_dive || deepDivesWithUrls?.research_deep_dive || deepDivesWithUrls?.podcast_deep_dive) && (
             <div className="imported-newsletter-content-section deep-dive-section">
                 <h2 className="imported-newsletter-section-highlight">This made us think</h2>
                 <ol className="imported-newsletter-list deep-dive-list">
-                    {deepDives?.article_deep_dive && (
+                    {deepDivesWithUrls?.article_deep_dive && (
                         <li>
-                           <p dangerouslySetInnerHTML={{ __html: `<strong>${deepDives.article_deep_dive.deep_dive_title}:</strong> ${deepDives.article_deep_dive.deep_dive_content}` }} />
+                           <p dangerouslySetInnerHTML={{ __html: renderDeepDiveContent(deepDivesWithUrls.article_deep_dive) }} />
                         </li>
                     )}
-                    {deepDives?.research_deep_dive && (
+                    {deepDivesWithUrls?.research_deep_dive && (
                          <li>
-                           <p dangerouslySetInnerHTML={{ __html: `<strong>${deepDives.research_deep_dive.deep_dive_title}:</strong> ${deepDives.research_deep_dive.deep_dive_content}` }} />
+                           <p dangerouslySetInnerHTML={{ __html: renderDeepDiveContent(deepDivesWithUrls.research_deep_dive) }} />
                         </li>
                     )}
-                    {deepDives?.podcast_deep_dive && (
+                    {deepDivesWithUrls?.podcast_deep_dive && (
                          <li>
-                           <p dangerouslySetInnerHTML={{ __html: `<strong>${deepDives.podcast_deep_dive.deep_dive_title}:</strong> ${deepDives.podcast_deep_dive.deep_dive_content}` }} />
+                           <p dangerouslySetInnerHTML={{ __html: renderDeepDiveContent(deepDivesWithUrls.podcast_deep_dive) }} />
                         </li>
                     )}
                 </ol>

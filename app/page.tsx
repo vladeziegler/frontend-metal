@@ -236,9 +236,7 @@ export default function NewsletterGenerator() {
   // Determine the currently selected topic object from the topics list
   const currentSelectedTopic = topics.find(t => t.id === selectedTopicId);
 
-  const handleOpenImportedPreview = () => {
-    setIsImportedPreviewOpen(true);
-  };
+
   
   const isLoadingPreview = isLoadingNewsletter || isLoadingDeepDives || isLoadingEvents || isLoadingJobs;
 
@@ -380,7 +378,7 @@ export default function NewsletterGenerator() {
                             {topics.map((topic: MetaSuggestion) => ( // Use MetaSuggestion type
                           <Card
                             key={topic.id}
-                                className={`cursor-pointer transition-all duration-200 hover:shadow-lg ${ selectedTopicId === topic.id ? "ring-2 ring-blue-600 bg-blue-50" : "hover:shadow-md"} ${topic.is_chosen ? "bg-green-50 border-green-400" : ""}`}
+                                className={`cursor-pointer transition-all duration-200 hover:shadow-lg ${ selectedTopicId === topic.id ? "ring-2 ring-blue-600 bg-blue-50" : "hover:shadow-md"}`}
                             onClick={() => handleTopicSelect(topic.id)}
                           >
                             <CardHeader>
@@ -400,7 +398,6 @@ export default function NewsletterGenerator() {
                                       <span>{topic.supporting_podcast_ids?.length || 0} Podcast Episodes</span>
                                       */} 
                                       <span>Created: {new Date(topic.created_at).toLocaleDateString()}</span>
-                                      {topic.is_chosen && <span className="ml-2 px-2 py-0.5 bg-green-200 text-green-800 rounded-full font-semibold text-xs">Chosen</span>}
                                 </div>
                               </CardContent>
                           </Card>
@@ -651,16 +648,16 @@ export default function NewsletterGenerator() {
                     </div>
                   <div className="lg:col-span-1 space-y-8">
                     {/* This column can be used for actions or status */}
-                    <Card>
+                    {/* <Card>
                         <CardHeader>
                             <CardTitle>Actions</CardTitle>
                         </CardHeader>
                         <CardContent className="flex flex-col space-y-2">
                             <Button onClick={handleOpenImportedPreview} variant="secondary" className="w-full">
-                                Preview Imported Component
+                                Newsletter skeleton
                             </Button>
                         </CardContent>
-                    </Card>
+                    </Card> */}
                   </div>
                   <Dialog open={isImportedPreviewOpen} onOpenChange={setIsImportedPreviewOpen}>
                       <DialogContent className="max-w-4xl" style={{ padding: 0 }}>
@@ -673,7 +670,7 @@ export default function NewsletterGenerator() {
                           ) : (
                             <ImportedNewsletter
                               newsletter={generatedNewsletter}
-                              deepDives={null}
+                              deepDivesWithUrls={deepDivesWithUrls}
                               jobTrackingEntries={jobTrackingEntries}
                               upcomingEvents={events}
                             />
