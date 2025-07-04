@@ -116,26 +116,21 @@ const StaticImportedNewsletter: React.FC<StaticImportedNewsletterProps> = ({
         <div className="corrected-header-container">
           <div className="new-logo">
             <img
-              src="https://ik.imagekit.io/h3u86kveh/BackbaseLogoSVG.svg?updatedAt=1750756425736"
-              alt="Backbase Logo"
-              width="25"
+              src="https://ik.imagekit.io/h3u86kveh/3xBanking.png?updatedAt=1751637214695"
+              alt="Banking Reinvented Logo"
+              width="120"
               height="25"
-              className="backbase-logo-img"
+              className="backbase-full-logo-img"
             />
-            <div className="new-logo-text">
-              <span className="new-logo-text-banking">Banking</span>
-              <span className="new-logo-text-reinvented">Reinvented</span>
-            </div>
           </div>
           <h1 className="imported-newsletter-title">MOMENTUM</h1>
           <div className="by-backbase-wrapper">
-            <span>by </span>
             <img
-              src="https://ik.imagekit.io/h3u86kveh/BackBaseLogoSVGTEXT.svg?updatedAt=1750756501656"
-              alt="Backbase"
-              width="60"
+              src="https://ik.imagekit.io/h3u86kveh/3xbackbase.png?updatedAt=1751637267279"
+              alt="by Backbase"
+              width="76"
               height="16"
-              className="backbase-text-logo"
+              className="by-backbase-logo"
             />
           </div>
         </div>
@@ -225,7 +220,7 @@ const StaticImportedNewsletter: React.FC<StaticImportedNewsletterProps> = ({
             <div className="imported-newsletter-podcast-image-container">
                 <div className="podcast-reimagined-content">
                     <img 
-                      src="https://ik.imagekit.io/h3u86kveh/Waves.svg?updatedAt=1750756342031" 
+                      src="https://ik.imagekit.io/h3u86kveh/3xwave.png?updatedAt=1751637359774" 
                       alt="Podcast soundwave" 
                       width="37" 
                       height="17" 
