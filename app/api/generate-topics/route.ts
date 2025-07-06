@@ -2,14 +2,22 @@ import { NextResponse } from 'next/server';
 
 const FASTAPI_BASE_URL = process.env.NEXT_PUBLIC_FASTAPI_BASE_URL || 'http://localhost:8080';
 
-export async function POST() {
+export async function POST(request: Request) {
   try {
+    // Parse the request body to get optional custom_context
+    const body = await request.json().catch(() => ({}));
+    const { custom_context } = body;
+
+    // Prepare payload for FastAPI backend
+    const payload = custom_context ? { custom_context } : {};
+
     const response = await fetch(`${FASTAPI_BASE_URL}/pipelines/generate-meta-suggestions`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'ngrok-skip-browser-warning': 'true'
       },
+      body: JSON.stringify(payload),
     });
 
     if (!response.ok) {

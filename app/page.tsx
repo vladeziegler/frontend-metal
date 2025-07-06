@@ -114,6 +114,10 @@ export default function NewsletterGenerator() {
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
   const [isImportedPreviewOpen, setIsImportedPreviewOpen] = useState(false);
   const [isDownloading, setIsDownloading] = useState(false);
+  
+  // Custom context functionality
+  const [showAdvancedOptions, setShowAdvancedOptions] = useState(false);
+  const [customContext, setCustomContext] = useState('');
 
   // Zustand store integration
   const {
@@ -203,7 +207,8 @@ export default function NewsletterGenerator() {
   };
 
   const handleGenerateNewTopics = async () => {
-    await generateTopics(); // This will set isGeneratingTopics and fetch new topics via store
+    const contextToUse = customContext.trim() || undefined;
+    await generateTopics(contextToUse); // Pass custom context to store
     // User feedback (e.g., toast notification) can be handled based on isGeneratingTopics and errorTopics from store
   };
 
@@ -362,11 +367,53 @@ export default function NewsletterGenerator() {
                     <div className="space-y-6">
                           <div className="flex justify-between items-center max-w-4xl mx-auto">
                             <h2 className="text-2xl font-bold text-gray-900">Choose Your Newsletter Topic</h2>
-                            <Button onClick={handleGenerateNewTopics} disabled={isGeneratingTopics || isLoadingTopics} variant="outline">
-                              {isGeneratingTopics ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : '✨'}
-                              {isGeneratingTopics ? 'Generating...' : 'Generate New Topics'}
-                            </Button>
+                            <div className="flex flex-col items-end space-y-2">
+                              <Button onClick={handleGenerateNewTopics} disabled={isGeneratingTopics || isLoadingTopics} variant="outline">
+                                {isGeneratingTopics ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : '✨'}
+                                {isGeneratingTopics ? 'Generating...' : 'Generate New Topics'}
+                              </Button>
+                              <Button 
+                                onClick={() => setShowAdvancedOptions(!showAdvancedOptions)}
+                                variant="ghost" 
+                                size="sm"
+                                className="text-sm text-gray-600 hover:text-gray-800"
+                              >
+                                {showAdvancedOptions ? '▲ Hide Advanced Options' : '▼ Show Advanced Options'}
+                              </Button>
+                            </div>
                           </div>
+                          
+                          {/* Advanced Options Expandable Section */}
+                          {showAdvancedOptions && (
+                            <Card className="max-w-4xl mx-auto border-blue-200 bg-blue-50">
+                              <CardHeader className="pb-3">
+                                <CardTitle className="text-lg text-blue-800">Advanced Topic Generation</CardTitle>
+                                <CardDescription className="text-blue-600">
+                                  Add custom context to guide topic generation. This will expand the data window to 180 days for both articles and research reports.
+                                </CardDescription>
+                              </CardHeader>
+                              <CardContent className="pt-0">
+                                <Label htmlFor="custom-context" className="text-sm font-medium text-blue-700 mb-2 block">
+                                  Custom Context (Optional)
+                                </Label>
+                                <Textarea
+                                  id="custom-context"
+                                  placeholder="e.g., Focus on AI and automation themes in banking, particularly around customer experience and operational efficiency..."
+                                  value={customContext}
+                                  onChange={(e) => setCustomContext(e.target.value)}
+                                  className="min-h-[100px] border-blue-300 focus:ring-blue-500 focus:border-blue-500"
+                                  disabled={isGeneratingTopics || isLoadingTopics}
+                                />
+                                <div className="mt-2 flex items-center text-sm text-blue-600">
+                                  <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+                                  </svg>
+                                  When custom context is provided, the system will use 180 days of data instead of the standard timeframe
+                                </div>
+                              </CardContent>
+                            </Card>
+                          )}
+                          
                           {isLoadingTopics && <div className="text-center py-4"><Loader2 className="h-8 w-8 animate-spin mx-auto text-blue-600" /> <p>Loading topics...</p></div>}
                           {errorTopics && <p className="text-red-600 text-center">Error loading topics: {errorTopics}</p>}
                           
@@ -392,11 +439,9 @@ export default function NewsletterGenerator() {
                             <CardContent>
                                   <CardDescription className="text-gray-600 mb-4 leading-relaxed">{topic.snippet || "No snippet available"}</CardDescription>
                                 <div className="flex items-center space-x-6 text-sm text-gray-500">
-                                      {/* Dynamic data not available for these counts from current backend MetaSuggestion 
                                       <span>{topic.source_article_ids?.length || 0} Source Articles</span>
                                       <span>{topic.supporting_research_ids?.length || 0} Research Reports</span>
-                                      <span>{topic.supporting_podcast_ids?.length || 0} Podcast Episodes</span>
-                                      */} 
+                                      <span>{topic.supporting_podcasts?.length || 0} Podcast Episodes</span>
                                       <span>Created: {new Date(topic.created_at).toLocaleDateString()}</span>
                                 </div>
                               </CardContent>

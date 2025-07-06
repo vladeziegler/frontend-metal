@@ -82,7 +82,7 @@ export interface MetaSuggestion {
   snippet?: string | null;
   source_article_ids?: number[];
   supporting_research_ids?: number[];
-  supporting_podcast_ids?: number[];
+  supporting_podcasts?: number[];
   is_chosen: boolean;
   created_at: string; 
   chosen_at?: string | null; 

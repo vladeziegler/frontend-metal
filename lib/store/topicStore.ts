@@ -15,7 +15,7 @@ interface TopicStoreState {
   chooseTopicError: string | null;
 
   fetchTopics: (limit?: number) => Promise<void>;
-  generateTopics: () => Promise<void>;
+  generateTopics: (customContext?: string) => Promise<void>;
   selectTopic: (topicId: number | null) => Promise<void>;
 }
 
@@ -52,14 +52,17 @@ export const useTopicStore = create<TopicStoreState>((set, get) => ({
     }
   },
 
-  generateTopics: async () => {
+  generateTopics: async (customContext?: string) => {
     set({ isGeneratingTopics: true, errorTopics: null });
     try {
-      const response = await fetch(`${FASTAPI_BASE_URL}/pipelines/generate-meta-suggestions`, {
+      // Use the Next.js API route instead of direct FastAPI call
+      const requestBody = customContext ? { custom_context: customContext } : {};
+      const response = await fetch('/api/generate-topics', {
         method: 'POST',
         headers: {
-          'ngrok-skip-browser-warning': 'true'
-        }
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(requestBody)
       });
       if (!response.ok) {
         let errorMsg = `Failed to trigger topic generation. Status: ${response.status}`;
