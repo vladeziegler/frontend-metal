@@ -164,7 +164,7 @@ const StaticImportedNewsletter: React.FC<StaticImportedNewsletterProps> = ({
 
         <div className="imported-newsletter-author-section">
             <img 
-              src="https://ik.imagekit.io/h3u86kveh/TimImageSVG.svg?updatedAt=1750756286589" 
+              src="https://ik.imagekit.io/h3u86kveh/Tim%20Profile.png?updatedAt=1751884232601" 
               alt="Tim Rutten" 
               width="100" 
               height="100" 
@@ -238,10 +238,13 @@ const StaticImportedNewsletter: React.FC<StaticImportedNewsletterProps> = ({
                 where we explore the various trends reshaping banks.<br/>
                 <a href="http://rss.com/podcasts/banking-reinvented" target="_blank" rel="noopener noreferrer">
                     <strong>Listen here</strong>
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-                        <circle cx="12" cy="12" r="11" stroke="currentColor" strokeWidth="2" fill="none"/>
-                        <path d="M10 8l6 4-6 4V8z" fill="currentColor"/>
-                    </svg>
+                    <img 
+                      src="https://ik.imagekit.io/h3u86kveh/Play%20icon.png?updatedAt=1751884732636" 
+                      alt="Play" 
+                      width="16"
+                      height="16"
+                      style={{ verticalAlign: 'middle', marginLeft: '3px' }}
+                    />
                 </a>
             </div>
         </div>
@@ -300,9 +303,24 @@ const StaticImportedNewsletter: React.FC<StaticImportedNewsletterProps> = ({
                     <div><strong>© Backbase</strong>   •   All rights reserved</div>
                     <div><a>Unsubscribe</a>&nbsp;  •  &nbsp;<a>Manage preferences</a></div>
                     <div className="imported-newsletter-footer-socials">
-                        <i className="fab fa-linkedin-in"></i>
-                        <i className="fab fa-facebook-f"></i>
-                        <i className="fab fa-instagram"></i>
+                        <img 
+                          src="https://ik.imagekit.io/h3u86kveh/LinkedIn%20icon.png?updatedAt=1751883568994" 
+                          alt="LinkedIn" 
+                          width="16" 
+                          height="16"
+                        />
+                        <img 
+                          src="https://ik.imagekit.io/h3u86kveh/Facebook%20icon.png?updatedAt=1751883568978" 
+                          alt="Facebook" 
+                          width="16" 
+                          height="16"
+                        />
+                        <img 
+                          src="https://ik.imagekit.io/h3u86kveh/insta%20icon.png?updatedAt=1751883569027" 
+                          alt="Instagram" 
+                          width="16" 
+                          height="16"
+                        />
                     </div>
                 </div>
             </div>
