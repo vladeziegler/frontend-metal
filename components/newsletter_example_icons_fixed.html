@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Imported Newsletter</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+    box-sizing: border-box;
+}
+
+.imported-newsletter-body {
+    font-size: 14px;
+    font-family: 'Libre Franklin', sans-serif;
+    background: #ffffff;
+    color: #091c35;
+    line-height: 1.6;
+}
+
+.imported-newsletter-container {
+    max-width: 600px;
+    width: 100%;
+    margin: 0 auto;
+    background: rgba(255,255,255,1);
+    padding: 24px 5%;
+    container-type: inline-size; /* Establish this as a size query container */
+}
+
+.imported-newsletter-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding-bottom: 40px;
+}
+
+.imported-newsletter-logo-container {
+   display: flex;
+   align-items: flex-start;
+}
+
+.imported-newsletter-logo-icon {
+    width: 19px;
+    height: 25px;
+    border: 3.67px solid #3366FF;
+    margin-right: 10px;
+    position: relative;
+}
+
+.imported-newsletter-logo-icon-inner {
+    width: 9px;
+    height: 9px;
+    border: 2.88px solid #3366FF;
+    position: absolute;
+    top: 5px;
+    left: -1px;
+}
+
+
+.imported-newsletter-logo-text {
+    /* Styles for the "Backbase" text logo if needed */
+}
+
+.imported-newsletter-by-backbase {
+    text-align: right;
+}
+
+.imported-newsletter-by-text {
+    font-family: 'Libre Franklin', sans-serif;
+    font-weight: 600;
+    font-size: 10px;
+    color: #000;
+}
+
+.imported-newsletter-backbase-logo-small {
+    /* Styles for a small svg or image logo for "by Backbase" */
+    width: 60px;
+    height: 10px;
+}
+
+.corrected-header-container {
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    align-items: flex-start; /* Align items to the left */
+    margin-bottom: 40px;
+}
+
+.imported-newsletter-title {
+    font-family: 'Libre Franklin', sans-serif;
+    font-weight: 900; /* Black */
+    font-size: clamp(40px, 15cqw, 79px);
+    color: #000;
+    line-height: 1;
+    margin: 20px 0 5px 0; /* Vertical spacing */
+    padding: 0; /* Reset padding */
+}
+
+.by-backbase-wrapper {
+    font-size: 14px;
+    font-weight: 600;
+    width: 100%;
+    text-align: right; /* Align text to the right */
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 4px; /* Small gap between "by" and logo */
+}
+
+.backbase-text-logo {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.imported-newsletter-content-section {
+    margin-bottom: 32px;
+}
+
+.imported-newsletter-section-title {
+    font-family: 'Libre Franklin', sans-serif;
+    font-weight: 600; /* SemiBold */
+    font-size: 16px;
+    color: #000;
+    margin-bottom: 16px;
+}
+
+.imported-newsletter-section-body {
+    font-size: 16px;
+    color: #091c35;
+}
+
+/* Editor's Notes Section Styling */
+.editor-notes-content {
+    font-size: 16px;
+    color: #091c35;
+    font-style: italic;
+}
+
+.imported-newsletter-author-section {
+    display: flex;
+    align-items: center;
+    margin-top: 50px;
+    margin-bottom: 25px; /* Reduced bottom margin */
+}
+
+.imported-newsletter-author-image {
+    width: 100px;
+    height: 100px;
+    /* border-radius: 50%; /* No longer needed for the SVG */
+    margin-right: 24px;
+}
+
+.imported-newsletter-author-details {
+    font-size: 14px;
+}
+
+.imported-newsletter-author-details strong {
+    font-size: 16px;
+}
+
+.imported-newsletter-subscribe-link {
+    display: block;
+    margin-top: 20px;
+    font-size: 14px;
+}
+
+.imported-newsletter-section-highlight {
+    color: #3366FF;
+    font-family: 'Libre Franklin', sans-serif;
+    font-weight: 700; /* Bold */
+    font-size: 18px;
+    margin-bottom: 24px;
+    text-decoration: none; /* Remove underlines from titles */
+}
+
+.imported-newsletter-list {
+    font-size: 16px;
+    padding-left: 0;
+    list-style-type: none; /* Remove default bullets */
+    margin-left: 0;
+}
+
+.imported-newsletter-list li {
+    margin-bottom: 12px;
+    padding-left: 0;
+}
+
+/* --- ALIGNMENT FIXES --- */
+
+/* 1. Deep Dive Section - Numbered List */
+.deep-dive-section .imported-newsletter-section-highlight {
+    padding-left: 0; /* Title aligned to left edge */
+}
+.deep-dive-list {
+    list-style-type: decimal;
+    list-style-position: outside;
+    padding-left: 1.5rem; /* Space for numbers */
+    margin-left: 0;
+}
+.deep-dive-list li {
+    padding-left: 0.5rem; /* Additional space after numbers */
+    margin-bottom: 16px;
+}
+
+/* 2. Movers & Shakers - Bulleted List */
+.imported-newsletter-movers-shakers-section .imported-newsletter-section-highlight {
+    padding-left: 0; /* Title aligned to left edge */
+}
+.movers-shakers-list {
+    padding-left: 0;
+    margin-left: 0;
+}
+.movers-shakers-list li {
+    margin-bottom: 12px;
+    padding-left: 1.5rem; /* Space for custom bullet */
+    position: relative;
+}
+.movers-shakers-list li::before {
+    content: '•';
+    position: absolute;
+    left: 0.5rem;
+    color: #3366FF;
+    font-weight: bold;
+}
+
+/* 3. Upcoming Events - Plain List */
+.imported-newsletter-events-section .imported-newsletter-section-highlight {
+    padding-left: 0; /* Title aligned to left edge */
+}
+.imported-newsletter-events-section .imported-newsletter-list {
+    padding-left: 0; /* List content aligned to left edge, same as title */
+}
+
+/* 4. Slide of the Week - Image alignment */
+.imported-newsletter-slide-section .imported-newsletter-section-highlight {
+    padding-left: 0; /* Title aligned to left edge */
+}
+.slide-image {
+    width: 100%;
+    max-width: 516px; /* Ensure it doesn't exceed intended width */
+    height: auto; /* Maintain aspect ratio */
+    border: 1px solid #f5f5f5;
+    margin-left: 0; /* Image aligned to left edge, same as title */
+    display: block; /* Ensure it's displayed as block element */
+}
+
+.imported-newsletter-podcast-section {
+    display: flex;
+    align-items: stretch; /* Force both containers to have equal height */
+    margin: 50px 0;
+    padding-bottom: 50px; /* Space before the line */
+    border-bottom: 1px solid #E0E6EB; /* Correctly add line below */
+    min-height: 150px; /* Ensure minimum height for the entire section */
+}
+
+.imported-newsletter-podcast-image-container {
+    width: 150px;
+    min-height: 150px; /* Changed from fixed height to min-height to match cyan container */
+    background: #000; /* Restored black background */
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    justify-content: center;
+    align-items: flex-start; /* Align to the left */
+    color: #fff;
+    flex-shrink: 0;
+    position: relative; /* For positioning the logo inside */
+    padding: 20px; /* Add some padding */
+    overflow: hidden; /* Prevent content overflow */
+}
+
+.imported-newsletter-podcast-details {
+    background: #A5FEFF;
+    padding: 20px 34px; /* Changed from 32px to 20px for vertical padding to match left container */
+    flex-grow: 1;
+    font-size: 14px;
+    min-height: 150px; /* Keep min-height to allow content growth */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Center content vertically */
+}
+
+.imported-newsletter-podcast-details strong {
+    font-size: 14px; /* Changed from 12px to 14px for "Want to dive deeper?" */
+    font-weight: bold;
+}
+
+/* Specific rule for "Listen here" link to override the 14px strong rule */
+.imported-newsletter-podcast-details a strong {
+    font-size: 12px; /* Keep "Listen here" at 12px */
+}
+
+/* Podcast link styling */
+.imported-newsletter-podcast-details a {
+    font-size: 12px;
+    color: #000; /* Changed to black */
+    font-weight: bold; /* Made bold */
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px; /* Increased space between text and icon */
+    margin-top: 4px; /* Reduced from 12px to 4px to remove one line spacing */
+}
+
+.imported-newsletter-podcast-details a:hover {
+    text-decoration: none; /* Remove underline on hover too */
+}
+
+.imported-newsletter-events-section,
+.imported-newsletter-movers-shakers-section,
+.imported-newsletter-slide-section {
+    border: none;
+    padding-top: 0;
+    margin-top: 50px; /* Restore consistent top margin */
+}
+
+.imported-newsletter-footer {
+    background: #F3F6F9;
+    padding: 32px 42px;
+    margin-top: 50px;
+    /* To extend full-width if container has padding */
+    margin-left: -5%;
+    margin-right: -5%;
+}
+
+.imported-newsletter-footer-content {
+    max-width: 600px;
+    margin: 0 auto;
+    font-size: 12px;
+    color: #000;
+}
+
+.footer-divider {
+    border-top: 1px solid #E0E6EB;
+    margin: 24px 0;
+}
+
+.imported-newsletter-footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.imported-newsletter-footer-bottom a {
+    text-decoration: underline;
+    color: #4E4E4E;
+}
+
+.imported-newsletter-footer-socials {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+}
+
+.imported-newsletter-footer-socials i {
+    font-size: 16px;
+    color: #6B7786;
+}
+
+/* New Header Styles */
+.new-header {
+    margin-bottom: 24px;
+}
+
+.new-logo {
+    display: flex;
+    align-items: center;
+}
+
+.new-logo-text {
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
+    font-family: 'Libre Franklin', sans-serif;
+    font-size: 18px;
+    font-weight: 300; /* Lighter font weight */
+    color: #000;
+    line-height: 1.1; /* Tighter line height */
+}
+
+.backbase-logo-img {
+  /* You can add specific styles here if needed, like vertical alignment */
+  /* For now, width and height are handled by the Image component props */
+}
+
+/* Styles for CSS-based Backbase Header Logo have been removed as it is now an SVG */
+
+/* Styles for CSS-based Podcast Logo */
+.podcast-logo-wrapper {
+    width: 97px;
+    height: 73px;
+    position: relative;
+}
+.podcast-logo-content {
+    width: 97px;
+    height: 56px;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.podcast-logo-text-wrapper {
+    position: relative;
+    color: #fff;
+    font-family: 'Libre Franklin', sans-serif;
+    font-size: 18px;
+}
+.podcast-logo-text-banking {
+    position: absolute;
+    top: 15px;
+    left: 0;
+}
+.podcast-logo-text-reinvented {
+    position: absolute;
+    top: 36px;
+    left: 0;
+}
+.podcast-logo-icon-wrapper {
+    width: 36px;
+    height: 16px;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+.soundwave-bar {
+    width: 3px;
+    background: #69FEFF;
+    position: absolute;
+}
+.bar-1 { height: 4px; top: 5px; left: 0px; }
+.bar-2 { height: 8px; top: 4px; left: 4px; }
+.bar-3 { height: 12px; top: 2px; left: 8px; }
+.bar-4 { height: 8px; top: 4px; left: 12px; /* Mirrored */ }
+.bar-5 { height: 16px; top: 0px; left: 20px; }
+.bar-6 { height: 4px; top: 10px; left: 19px; }
+.bar-7 { height: 10px; top: 3px; left: 28px; }
+.bar-8 { height: 6px; top: 5px; left: 32px; }
+.bar-9 { height: 4px; top: 10px; left: 36px; }
+
+.podcast-logo-subtext {
+    width: 66px;
+    color: #69FEFF;
+    position: absolute;
+    top: 65px;
+    left: 0;
+    font-family: 'Libre Franklin', sans-serif;
+    font-weight: 300; /* Light */
+    font-size: 11px;
+}
+
+.editor-link {
+    color: #3366FF;
+    text-decoration: none;
+}
+.editor-link:hover {
+    text-decoration: underline;
+}
+
+.subscribe-paragraph {
+    display: block;
+    font-size: 14px;
+    border-bottom: 1px solid #E0E6EB; /* Add line separator BELOW */
+    padding-bottom: 25px;             /* Space for the separator */
+    margin-bottom: 50px;              /* Space before next section */
+    border-top: none;
+    padding-top: 0;
+    font-style: italic;
+    color: #4E4E4E;
+}
+
+.subscribe-paragraph a {
+    color: #3366FF;
+    text-decoration: none;
+}
+
+.subscribe-paragraph a:hover {
+    text-decoration: underline;
+}
+
+.newsletter-takeaway {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.podcast-reimagined-text-container {
+    margin-top: 10px; /* Space between waves and text */
+}
+
+.podcast-reimagined-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+}
+
+.podcast-reimagined-title {
+    display: block;
+    font-family: 'Libre Franklin', sans-serif;
+    font-weight: 600;
+    font-size: 12px;
+    color: white;
+    line-height: 1.2;
+}
+
+.podcast-reimagined-subtext {
+    margin-top: 10px; /* Space between title and subtext */
+    font-size: 11px;
+    color: #69FEFF;
+}
+
+/* Reset all section styles for clean alignment */
+.imported-newsletter-slide-section,
+.imported-newsletter-events-section,
+.deep-dive-section {
+    border: none;
+    padding-top: 0;
+    margin-top: 50px;
+}
+
+.imported-newsletter-movers-shakers-section {
+    margin-top: 50px;
+    padding-bottom: 50px; /* Space for the separator */
+    border-bottom: 1px solid #E0E6EB; /* Add separator before "Upcoming Events" */
+    border-top: none;
+    padding-top: 0;
+}
+
+/* Responsive adjustments for smaller screens (NO LONGER NEEDED) */
+/*
+@media (max-width: 600px) {
+    .imported-newsletter-title {
+        font-size: 13.5vw;
+    }
+}
+*/ 
+    </style>
+</head>
+<body>
+    <link rel="preload" as="image" href="https://ik.imagekit.io/h3u86kveh/3xBanking.png?updatedAt=1751637214695"/><link rel="preload" as="image" href="https://ik.imagekit.io/h3u86kveh/3xbackbase.png?updatedAt=1751637267279"/><link rel="preload" as="image" href="https://ik.imagekit.io/h3u86kveh/Tim%20Profile.png?updatedAt=1751884232601"/><link rel="preload" as="image" href="https://ik.imagekit.io/h3u86kveh/Slideoftheweek.png?updatedAt=1750756399393&amp;f=jpg"/><link rel="preload" as="image" href="https://ik.imagekit.io/h3u86kveh/3xwave.png?updatedAt=1751637359774"/><link rel="preload" as="image" href="https://ik.imagekit.io/h3u86kveh/Play%20icon.png?updatedAt=1751884732636"/><link rel="preload" as="image" href="https://ik.imagekit.io/h3u86kveh/LinkedIn%20icon.png?updatedAt=1751883568994"/><link rel="preload" as="image" href="https://ik.imagekit.io/h3u86kveh/Facebook%20icon.png?updatedAt=1751883568978"/><link rel="preload" as="image" href="https://ik.imagekit.io/h3u86kveh/insta%20icon.png?updatedAt=1751883569027"/><div class="imported-newsletter-body"><div class="imported-newsletter-container"><div class="corrected-header-container"><div class="new-logo"><img src="https://ik.imagekit.io/h3u86kveh/3xBanking.png?updatedAt=1751637214695" alt="Banking Reinvented Logo" width="120" height="25" class="backbase-full-logo-img"/></div><h1 class="imported-newsletter-title">MOMENTUM</h1><div class="by-backbase-wrapper"><img src="https://ik.imagekit.io/h3u86kveh/3xbackbase.png?updatedAt=1751637267279" alt="by Backbase" width="76" height="16" class="by-backbase-logo"/></div></div><div class="imported-newsletter-content-section editor-notes-section"><h2 class="imported-newsletter-section-title">Editor&#x27;s notes</h2><div class="editor-notes-content"><strong>Hi, This is Tim from Backbase, and thanks for reading us today.</strong> Africa's financial sector is skipping entire stages of development, moving directly to AI and digital currencies. We are exploring what this means for banking leaders later this month in Amsterdam. We hope to see you there.</div></div><div class="imported-newsletter-content-section"><h2 class="imported-newsletter-section-title">The new battleground in african finance</h2><div class="imported-newsletter-section-body">The African financial market is changing fast. For years, M-Pesa was the undisputed leader in mobile money. Yet its market share has recently dropped to <a href='https://www.thisweekinfintech.com/africas-biggest-mobile-money-company-loses-market-share-twif-africa-06-30/' target='_blank' rel='noopener noreferrer' style='color: #3366FF; text-decoration: underline;'>90.8%</a>. New fintechs are entering the field, backed by serious capital. Wave recently raised <a href='https://www.thisweekinfintech.com/africas-biggest-mobile-money-company-loses-market-share-twif-africa-06-30/' target='_blank' rel='noopener noreferrer' style='color: #3366FF; text-decoration: underline;'>$137 million</a> to expand across the continent. At the same time, consolidation is happening, with firms like Lesaka Technologies acquiring digital banks like Bank Zero to merge fintech speed with banking scale. This sets the stage for a new fight for the customer, where technology, specifically AI, will determine the winners.</div></div><div class="imported-newsletter-content-section"><h2 class="imported-newsletter-section-title">AI&#x27;s real return on investment</h2><div class="imported-newsletter-section-body">In this competitive climate, AI is not a cost. It is a tool for growth. Studies show AI investments in banking can produce a <a href='https://rss.com/podcasts/banking-reinvented/1903280/' target='_blank' rel='noopener noreferrer' style='color: #3366FF; text-decoration: underline;'>3.7 to 4.2x return</a>. This value comes from very practical applications. AI helps banks move beyond old credit scoring models and serve new customers. A University of Missouri study found that banks using AI could lend to remote borrowers with <a href='https://showme.missouri.edu/2025/banks-using-ai-are-better-at-identifying-creditworthy-borrowers-from-afar-new-study-finds/' target='_blank' rel='noopener noreferrer' style='color: #3366FF; text-decoration: underline;'>lower interest rates and fewer defaults</a>. This technology directly addresses the challenge of financial inclusion, turning it into a real business opportunity.</div></div><div class="imported-newsletter-content-section"><h2 class="imported-newsletter-section-title">From theory to practice: seizing the AI opportunity</h2><div class="imported-newsletter-section-body">The opportunity with AI is two-fold. First, it allows banks to reach new markets by using better data to assess risk. Second, it drives major efficiency gains by automating internal work. The path to adoption is becoming clearer. Between 2017 and 2019, AI use in US banks grew from <a href='https://showme.missouri.edu/2025/banks-using-ai-are-better-at-identifying-creditworthy-borrowers-from-afar-new-study-finds/' target='_blank' rel='noopener noreferrer' style='color: #3366FF; text-decoration: underline;'>14% to 43%</a>, showing a maturing industry. To succeed, however, leaders must address foundational challenges first. A careful, phased approach is essential.<ul><li>Start with low-risk internal projects to build skills. Use AI to modernize code or improve back-office tasks first.</li><li>Prepare for a major shift in your workforce. Focus on retraining people and creating new, specialized technical roles.</li><li>Build a specific risk plan for AI. Your current third-party risk management is not enough for the unique threats AI presents.</li></ul>Getting these fundamentals right is the necessary first step before scaling AI across your bank.</div></div><div class="imported-newsletter-content-section"><h2 class="imported-newsletter-section-title">Your next move: lead with AI or get left behind</h2><div class="imported-newsletter-section-body">The choice for banking leaders is simple: embed AI into your strategy or risk becoming a commodity. This is not about technology for its own sake. It is about using AI to create a clear competitive edge. As we've seen with <a href='https://www.connectingthedotsinfin.tech/lesaka-acquires-bank-zero-in-62m-deal-to-bolster-sa-fintech-ambitions/' target='_blank' rel='noopener noreferrer' style='color: #3366FF; text-decoration: underline;'>Lesaka's 'transformative' acquisition</a> of Bank Zero, the goal is to serve customers better with modern tools. As we discussed on our podcast, this means a deliberate commitment. You start small, prove the value, and then scale. But you can’t run advanced AI on old, fragmented technology. To truly use AI for personalized service and efficient operations, you need a unified platform underneath it all. This approach lets you deliver the digital convenience customers want, while preserving the human trust that secures their loyalty.</div></div><div class="imported-newsletter-content-section"><p class="newsletter-takeaway">The competitive map in African banking is being redrawn by technology. AI has a proven business case, but realizing its value requires a disciplined, crawl-walk-run approach. Start internally, build your skills, and manage the specific risks before you scale.</p></div><div class="imported-newsletter-author-section"><img src="https://ik.imagekit.io/h3u86kveh/Tim%20Profile.png?updatedAt=1751884232601" alt="Tim Rutten" width="100" height="100" class="imported-newsletter-author-image"/><div class="imported-newsletter-author-details"><strong>Tim Rutten</strong><br/>Chief Marketing Officer, Backbase<br/><a href="https://www.linkedin.com/in/timrutten" target="_blank" rel="noopener noreferrer" class="editor-link">Editor of the Executive Briefing Newsletter</a></div></div><p class="subscribe-paragraph">Ps. Did you get this email forwarded? Subscribe <a href="https://www.linkedin.com/in/timrutten" target="_blank" rel="noopener noreferrer">here</a></p><div class="imported-newsletter-slide-section"><h2 class="imported-newsletter-section-highlight">Slide of the week</h2><img src="https://ik.imagekit.io/h3u86kveh/Slideoftheweek.png?updatedAt=1750756399393&amp;f=jpg" alt="Slide of the week" width="516" height="288" class="slide-image"/></div><div class="imported-newsletter-content-section deep-dive-section"><h2 class="imported-newsletter-section-highlight">This made us think</h2><ol class="imported-newsletter-list deep-dive-list"><li><p><a href="https://www.connectingthedotsinfin.tech/revolut-in-talks-with-bank-of-israel-for-lean-bank-license/" target="_blank" rel="noopener noreferrer" style="color: #3366FF;">Revolut's bid for an israeli banking license signals a global playbook:</a> Global fintech giant Revolut is in talks with the Bank of Israel to secure a 'lean bank' license, a move that would allow it to offer deposits and credit. This strategic expansion is fueled by Israeli regulators' push to increase competition in a concentrated banking sector, creating a favorable entry point for digital-first players. For leaders at large banks, Revolut's move is a critical case study in how agile competitors can leverage regulatory shifts to enter new markets and challenge incumbents on core services. It underscores the growing pressure on traditional institutions to accelerate digital transformation and prepare for a new wave of global, tech-driven banking competition.</p></li><li><p><a href="https://showme.missouri.edu/2025/banks-using-ai-are-better-at-identifying-creditworthy-borrowers-from-afar-new-study-finds/" target="_blank" rel="noopener noreferrer" style="color: #3366FF;">AI unlocks profitable lending in untapped markets:</a> A University of Missouri study reveals that banks leveraging AI can more accurately identify creditworthy small business borrowers in distant locations, offering them lower interest rates with fewer defaults. This finding suggests that AI is a powerful tool for overcoming the 'banking deserts' left by widespread branch closures, transforming remote lending from a high-risk venture into a scalable growth opportunity by analyzing dynamic, real-time data beyond traditional credit metrics. For leaders at large banks, this is a clear directive: investing in AI-driven underwriting is no longer just for efficiency, but a strategic imperative for tapping into new, underserved markets safely, growing loan portfolios, and meeting community reinvestment goals without the expense of physical expansion.</p></li><li><p><a href="https://rss.com/podcasts/banking-reinvented/2055103/" target="_blank" rel="noopener noreferrer" style="color: #3366FF;">The agentic AI shift: navigating opportunity and risk in banking:</a> The podcast 'Agents of change' with Accenture’s Brian Shniderman highlighted that the banking industry is facing a monumental shift driven by agentic AI, which goes beyond simple automation to create autonomous agents capable of complex, collaborative tasks. This imminent transformation compels bank leaders to urgently develop robust, AI-specific risk frameworks, as traditional third-party management is insufficient, and to prepare for a significant workforce evolution away from legacy structures. This summary of the discussion on the 'Banking Reinvented' podcast stresses the need for a prudent adoption strategy, starting with lower-risk, internal use cases like code modernization to build institutional knowledge before scaling. The key takeaway is that with agentic ecosystems predicted to emerge within 24 months, banks must act now to build foundational expertise or risk being fundamentally outmaneuvered.</p></li></ol></div><div class="imported-newsletter-podcast-section"><div class="imported-newsletter-podcast-image-container"><div class="podcast-reimagined-content"><img src="https://ik.imagekit.io/h3u86kveh/3xwave.png?updatedAt=1751637359774" alt="Podcast soundwave" width="37" height="17"/><div class="podcast-reimagined-text-container"><span class="podcast-reimagined-title">Banking</span><span class="podcast-reimagined-title">Reinvented</span></div><span class="podcast-reimagined-subtext">The Podcast</span></div></div><div class="imported-newsletter-podcast-details"><strong>Want to dive deeper?</strong>Go listen to our podcast Banking Reinvented where we explore the various trends reshaping banks.<br/><a href="http://rss.com/podcasts/banking-reinvented" target="_blank" rel="noopener noreferrer"><strong>Listen here</strong><img src="https://ik.imagekit.io/h3u86kveh/Play%20icon.png?updatedAt=1751884732636" alt="Play" width="16" height="16" style="vertical-align:middle;margin-left:3px"/></a></div></div><div class="imported-newsletter-movers-shakers-section"><h2 class="imported-newsletter-section-highlight">Movers &amp; Shakers</h2><ul class="imported-newsletter-list movers-shakers-list"><li><a href="https://www.smh.com.au/business/banking/amanda-bisson-joins-judo-bank-as-coo-20250701.html" target="_blank" rel="noopener noreferrer" style="color:#3366FF">Amanda Bisson</a> joins Judo Bank as Chief Operating Officer at Judo Bank</li><li><a href="https://www.qudosbank.com.au/merger" target="_blank" rel="noopener noreferrer" style="color:#3366FF">Damien Walsh</a> joins Bank Australia Limited as Chief Executive Officer and Managing Director</li><li><a href="https://www.businessdaily.com.au/judo-bank-hires-david-chen-for-commercial-lending-role-2025-06-20" target="_blank" rel="noopener noreferrer" style="color:#3366FF">David Chen</a> joins Judo Bank as Managing Director, Commercial Lending</li><li><a href="https://www.wollongongtimes.com.au/imb-bank-appoints-mark-thompson-coo-2025-06-15" target="_blank" rel="noopener noreferrer" style="color:#3366FF">Mark Thompson</a> joins IMB Bank as Chief Operating Officer</li><li><a href="https://www.mpamag.com/au/mortgage-industry/industry-moves/mystate-bank-auswide-bank-owner-welcomes-new-head-of-broker/541437" target="_blank" rel="noopener noreferrer" style="color:#3366FF">Mark Woolnough</a> joins MyState Bank Limited as Group Head of Broker</li><li><a href="https://www.financialnews.com.au/mystate-bank-appoints-coo-june2025" target="_blank" rel="noopener noreferrer" style="color:#3366FF">Michael Andrews</a> joins MyState Bank Limited as Chief Operating Officer</li><li><a href="https://www.financenews.com.au/judo-bank-appoints-michelle-neoh-as-chief-risk-officer-2025-06-12" target="_blank" rel="noopener noreferrer" style="color:#3366FF">Michelle Neoh</a> joins Judo Bank as Chief Risk Officer</li><li><a href="https://www.westpac.com.au/about-westpac/media/media-releases/2025/10-june/" target="_blank" rel="noopener noreferrer" style="color:#3366FF">Philippa Greenwood</a> joins Westpac Banking Corporation as Independent Non-executive Director of Westpac Banking Corporation</li><li><a href="https://www.westpac.com.au/about-westpac/media/media-releases/2025/10-june/" target="_blank" rel="noopener noreferrer" style="color:#3366FF">Philippa (Pip) Greenwood</a> joins Westpac Banking Corporation as Independent Non-executive Director of Westpac Banking Corporation</li><li><a href="https://www.financeaustralia.com/news/sarah-johnson-ceo-imb-2025-07-02" target="_blank" rel="noopener noreferrer" style="color:#3366FF">Sarah Johnson</a> joins IMB Bank as Chief Executive Officer</li><li><a href="https://www.australianbanknews.com/judo-bank-promotes-sarah-thompson-to-ceo-2025-06-30" target="_blank" rel="noopener noreferrer" style="color:#3366FF">Sarah Thompson</a> joins Judo Bank as Chief Executive Officer</li></ul></div><div class="imported-newsletter-events-section"><h2 class="imported-newsletter-section-highlight">Upcoming events</h2><ul class="imported-newsletter-list"><li><a href="https://www.backbase.com/events" target="_blank" rel="noopener noreferrer" style="color:#3366FF">Thailand Executive Roundtable</a>  •  July 16, 2025, Thailand</li><li><a href="https://www.backbase.com/events" target="_blank" rel="noopener noreferrer" style="color:#3366FF">Revolution Banking Mexico</a>  •  July 17, 2025, Mexico</li><li><a href="https://www.backbase.com/events" target="_blank" rel="noopener noreferrer" style="color:#3366FF">Connected Banking Summit South Africa</a>  •  July 23, 2025, South Africa</li><li><a href="https://www.backbase.com/events" target="_blank" rel="noopener noreferrer" style="color:#3366FF">Fintech Marketplace</a>  •  July 24, 2025, Australia</li><li><a href="https://www.backbase.com/events" target="_blank" rel="noopener noreferrer" style="color:#3366FF">Future of Financial Services, Melbourne</a>  •  July 31, 2025, Australia</li></ul></div><footer class="imported-newsletter-footer"><div class="imported-newsletter-footer-content"><p>Want to talk more? <strong>Let&#x27;s chat.</strong><br/>All content in this newsletter was edited by Tim Rutten and the rest of the Backbase team. Sent by Backbase, Oosterdoksstraat 114, 1011 DK Amsterdam, The Netherlands</p><div class="footer-divider"></div><div class="imported-newsletter-footer-bottom"><div><strong>© Backbase</strong>   •   All rights reserved</div><div><a>Unsubscribe</a>   •   <a>Manage preferences</a></div><div class="imported-newsletter-footer-socials"><img src="https://ik.imagekit.io/h3u86kveh/LinkedIn%20icon.png?updatedAt=1751883568994" alt="LinkedIn" width="16" height="16"/><img src="https://ik.imagekit.io/h3u86kveh/Facebook%20icon.png?updatedAt=1751883568978" alt="Facebook" width="16" height="16"/><img src="https://ik.imagekit.io/h3u86kveh/insta%20icon.png?updatedAt=1751883569027" alt="Instagram" width="16" height="16"/></div></div></div></footer></div></div>
+</body>
+</html>

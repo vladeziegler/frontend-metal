@@ -1,4 +1,5 @@
 import React from 'react';
+import '../app/imported-newsletter.css';
 import { GeneratedNewsletterData, ContentSection } from '@/lib/types';
 import { AllDeepDivesWithUrlsForMetaSuggestionResponse } from '@/lib/store/deepDiveStore';
 import { JobTrackingEntry } from '@/lib/store/jobTrackingStore';
@@ -113,24 +114,28 @@ const StaticImportedNewsletter: React.FC<StaticImportedNewsletterProps> = ({
     <div className="imported-newsletter-body">
       <div className="imported-newsletter-container">
 
-        <div className="corrected-header-container">
-          <div className="new-logo">
+        <div className="corrected-header-container" style={{display: 'flex', flexDirection: 'column', alignItems: 'flex-start', marginBottom: '40px'}}>
+          <div className="new-logo" style={{display: 'flex', alignItems: 'center'}}>
             <img
               src="https://ik.imagekit.io/h3u86kveh/3xBanking.png?updatedAt=1751637214695"
               alt="Banking Reinvented Logo"
               width="120"
               height="25"
               className="backbase-full-logo-img"
+              style={{display: 'block', border: 0, outline: 'none'}}
             />
           </div>
-          <h1 className="imported-newsletter-title">MOMENTUM</h1>
-          <div className="by-backbase-wrapper">
+          <h1 className="imported-newsletter-title" style={{fontFamily: 'Libre Franklin, Arial, sans-serif', fontWeight: '900', fontSize: 'clamp(40px, 15cqw, 79px)', color: '#000', lineHeight: '1', margin: '20px 0 5px 0', padding: '0'}}>
+            MOMENTUM
+          </h1>
+          <div className="by-backbase-wrapper" style={{fontSize: '14px', fontWeight: '600', width: '100%', textAlign: 'right', display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '4px'}}>
             <img
               src="https://ik.imagekit.io/h3u86kveh/3xbackbase.png?updatedAt=1751637267279"
               alt="by Backbase"
               width="76"
               height="16"
               className="by-backbase-logo"
+              style={{display: 'block', border: 0, outline: 'none'}}
             />
           </div>
         </div>
@@ -216,34 +221,35 @@ const StaticImportedNewsletter: React.FC<StaticImportedNewsletterProps> = ({
             </div>
         )}
 
-        <div className="imported-newsletter-podcast-section">
-            <div className="imported-newsletter-podcast-image-container">
-                <div className="podcast-reimagined-content">
+        <div className="imported-newsletter-podcast-section" style={{display: 'flex', alignItems: 'stretch', margin: '50px 0', paddingBottom: '50px', borderBottom: '1px solid #E0E6EB', minHeight: '150px'}}>
+            <div className="imported-newsletter-podcast-image-container" style={{width: '150px', minHeight: '150px', background: '#000', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'flex-start', color: '#fff', flexShrink: '0', position: 'relative', padding: '20px', overflow: 'hidden'}}>
+                <div className="podcast-reimagined-content" style={{display: 'flex', flexDirection: 'column', alignItems: 'flex-start', justifyContent: 'center', height: '100%', width: '100%'}}>
                     <img 
                       src="https://ik.imagekit.io/h3u86kveh/3xwave.png?updatedAt=1751637359774" 
                       alt="Podcast soundwave" 
                       width="37" 
-                      height="17" 
+                      height="17"
+                      style={{display: 'block', border: 0}}
                     />
-                    <div className="podcast-reimagined-text-container">
-                        <span className="podcast-reimagined-title">Banking</span>
-                        <span className="podcast-reimagined-title">Reinvented</span>
+                    <div className="podcast-reimagined-text-container" style={{marginTop: '10px'}}>
+                        <span className="podcast-reimagined-title" style={{display: 'block', fontFamily: 'Libre Franklin, Arial, sans-serif', fontWeight: '600', fontSize: '12px', color: 'white', lineHeight: '1.2'}}>Banking</span>
+                        <span className="podcast-reimagined-title" style={{display: 'block', fontFamily: 'Libre Franklin, Arial, sans-serif', fontWeight: '600', fontSize: '12px', color: 'white', lineHeight: '1.2'}}>Reinvented</span>
                     </div>
-                    <span className="podcast-reimagined-subtext">The Podcast</span>
+                    <span className="podcast-reimagined-subtext" style={{marginTop: '10px', fontSize: '11px', color: '#69FEFF'}}>The Podcast</span>
                 </div>
             </div>
-            <div className="imported-newsletter-podcast-details">
-                <strong>Want to dive deeper?</strong>
+            <div className="imported-newsletter-podcast-details" style={{background: '#A5FEFF', padding: '20px 34px', flexGrow: '1', fontSize: '14px', minHeight: '150px', display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
+                <strong style={{fontSize: '14px', fontWeight: 'bold'}}>Want to dive deeper?</strong>
                 Go listen to our podcast Banking Reinvented
                 where we explore the various trends reshaping banks.<br/>
-                <a href="http://rss.com/podcasts/banking-reinvented" target="_blank" rel="noopener noreferrer">
-                    <strong>Listen here</strong>
+                <a href="http://rss.com/podcasts/banking-reinvented" target="_blank" rel="noopener noreferrer" style={{fontSize: '12px', color: '#000', fontWeight: 'bold', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '8px', marginTop: '4px'}}>
+                    <strong style={{fontSize: '12px'}}>Listen here</strong>
                     <img 
                       src="https://ik.imagekit.io/h3u86kveh/Play%20icon.png?updatedAt=1751884732636" 
                       alt="Play" 
                       width="16"
                       height="16"
-                      style={{ verticalAlign: 'middle', marginLeft: '3px' }}
+                      style={{verticalAlign: 'middle', marginLeft: '3px', border: 0}}
                     />
                 </a>
             </div>
@@ -292,34 +298,37 @@ const StaticImportedNewsletter: React.FC<StaticImportedNewsletterProps> = ({
             </div>
         )}
 
-        <footer className="imported-newsletter-footer">
-            <div className="imported-newsletter-footer-content">
-                <p>
+        <footer className="imported-newsletter-footer" style={{background: '#F3F6F9', padding: '32px 42px', marginTop: '50px', marginLeft: '-5%', marginRight: '-5%'}}>
+            <div className="imported-newsletter-footer-content" style={{maxWidth: '600px', margin: '0 auto', fontSize: '12px', color: '#000'}}>
+                <p style={{fontSize: '12px', color: '#000', margin: '0 0 24px 0'}}>
                     Want to talk more? <strong>Let&apos;s chat.</strong><br/>
                     All content in this newsletter was edited by Tim Rutten and the rest of the Backbase team. Sent by Backbase, Oosterdoksstraat 114, 1011 DK Amsterdam, The Netherlands
                 </p>
-                <div className="footer-divider"></div>
-                <div className="imported-newsletter-footer-bottom">
-                    <div><strong>© Backbase</strong>   •   All rights reserved</div>
-                    <div><a>Unsubscribe</a>&nbsp;  •  &nbsp;<a>Manage preferences</a></div>
-                    <div className="imported-newsletter-footer-socials">
+                <div className="footer-divider" style={{borderTop: '1px solid #E0E6EB', margin: '24px 0'}}></div>
+                <div className="imported-newsletter-footer-bottom" style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
+                    <div style={{fontSize: '12px', color: '#000'}}><strong>© Backbase</strong>   •   All rights reserved</div>
+                    <div style={{fontSize: '12px'}}><a href="#" style={{textDecoration: 'underline', color: '#4E4E4E'}}>Unsubscribe</a>&nbsp;  •  &nbsp;<a href="#" style={{textDecoration: 'underline', color: '#4E4E4E'}}>Manage preferences</a></div>
+                    <div className="imported-newsletter-footer-socials" style={{display: 'flex', gap: '16px', alignItems: 'center'}}>
                         <img 
                           src="https://ik.imagekit.io/h3u86kveh/LinkedIn%20icon.png?updatedAt=1751883568994" 
                           alt="LinkedIn" 
                           width="16" 
                           height="16"
+                          style={{display: 'block', border: 0}}
                         />
                         <img 
                           src="https://ik.imagekit.io/h3u86kveh/Facebook%20icon.png?updatedAt=1751883568978" 
                           alt="Facebook" 
                           width="16" 
                           height="16"
+                          style={{display: 'block', border: 0}}
                         />
                         <img 
                           src="https://ik.imagekit.io/h3u86kveh/insta%20icon.png?updatedAt=1751883569027" 
                           alt="Instagram" 
                           width="16" 
                           height="16"
+                          style={{display: 'block', border: 0}}
                         />
                     </div>
                 </div>
