@@ -114,46 +114,55 @@ const StaticImportedNewsletter: React.FC<StaticImportedNewsletterProps> = ({
     <div className="imported-newsletter-body">
       <div className="imported-newsletter-container">
 
-        <div className="corrected-header-container" style={{position: 'relative', marginBottom: '40px', marginTop: '50px'}}>
-          
-          {/* Banking Reinvented logo - positioned above and left-aligned to MOMENTUM */}
-          <div style={{position: 'absolute', top: '-45px', left: '0'}}>
-            <img
-              src="https://ik.imagekit.io/h3u86kveh/3xBanking.png?updatedAt=1751637214695"
-              alt="Banking Reinvented Logo"
-              width="120"
-              height="25"
-              style={{display: 'block', border: 0, outline: 'none'}}
-            />
-          </div>
-          
-          {/* MOMENTUM - full width base element */}
-          <h1 className="imported-newsletter-title" style={{
-            fontFamily: 'Arial, sans-serif', 
-            fontWeight: '900', 
-            fontSize: '79px', 
-            color: '#000', 
-            lineHeight: '1', 
-            margin: '0', 
-            padding: '0', 
-            width: '100%',
-            textAlign: 'center'
-          }}>
-            MOMENTUM
-          </h1>
-          
-          {/* by Backbase - underneath and right-aligned */}
-          <div style={{width: '100%', textAlign: 'right', marginTop: '10px'}}>
-            <img
-              src="https://ik.imagekit.io/h3u86kveh/3xbackbase.png?updatedAt=1751637267279"
-              alt="by Backbase"
-              width="76"
-              height="16"
-              style={{display: 'inline-block', border: 0, outline: 'none'}}
-            />
-          </div>
-          
-        </div>
+        {/* ================= HEADER : Gmail-safe ================= */}
+        <table width="100%" cellPadding={0} cellSpacing={0} style={{margin: '50px 0 40px 0'}}>
+          <tbody>
+            {/* Banking Reinvented logo row */}
+            <tr>
+              <td align="left" style={{paddingBottom: '8px'}}>
+                <img
+                  src="https://ik.imagekit.io/h3u86kveh/3xBanking.png?updatedAt=1751637214695"
+                  alt="Banking Reinvented Logo"
+                  width="120"
+                  height="26"
+                  style={{display: 'block', border: 0, outline: 'none'}}
+                />
+              </td>
+            </tr>
+
+            {/* MOMENTUM row */}
+            <tr>
+              <td align="center">
+                <h1 className="imported-newsletter-title" style={{
+                  fontFamily: 'Arial, sans-serif',
+                  fontWeight: 900,
+                  fontSize: '79px',
+                  lineHeight: 1,
+                  color: '#000',
+                  margin: 0,
+                  padding: 0
+                }}>
+                  MOMENTUM
+                </h1>
+              </td>
+            </tr>
+
+            {/* by Backbase row */}
+            <tr>
+              <td align="center">
+                <div style={{textAlign: 'right', marginTop: '5px'}}>
+                  <img
+                    src="https://ik.imagekit.io/h3u86kveh/3xbackbase.png?updatedAt=1751637267279"
+                    alt="by Backbase"
+                    width="87"
+                    height="16"
+                    style={{display: 'inline-block', border: 0, outline: 'none'}}
+                  />
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
 
         {/* --- EDITOR'S NOTES SECTION --- */}
         {newsletter?.editor_notes && (
@@ -236,39 +245,44 @@ const StaticImportedNewsletter: React.FC<StaticImportedNewsletterProps> = ({
             </div>
         )}
 
-        <div className="imported-newsletter-podcast-section" style={{display: 'flex', alignItems: 'stretch', margin: '50px 0', paddingBottom: '50px', borderBottom: '1px solid #E0E6EB', minHeight: '150px'}}>
-            <div className="imported-newsletter-podcast-image-container" style={{width: '150px', minHeight: '150px', background: '#000', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'flex-start', color: '#fff', flexShrink: 0, position: 'relative', padding: '20px', overflow: 'hidden'}}>
-                <div className="podcast-reimagined-content" style={{display: 'flex', flexDirection: 'column', alignItems: 'flex-start', justifyContent: 'center', height: '100%', width: '100%'}}>
-                    <img 
-                      src="https://ik.imagekit.io/h3u86kveh/3xwave.png?updatedAt=1751637359774" 
-                      alt="Podcast soundwave" 
-                      width="37" 
-                      height="17"
-                      style={{display: 'block', border: 0}}
-                    />
-                    <div className="podcast-reimagined-text-container" style={{marginTop: '10px'}}>
-                        <span className="podcast-reimagined-title" style={{display: 'block', fontFamily: 'Arial, sans-serif', fontWeight: '600', fontSize: '12px', color: 'white', lineHeight: '1.2'}}>Banking</span>
-                        <span className="podcast-reimagined-title" style={{display: 'block', fontFamily: 'Arial, sans-serif', fontWeight: '600', fontSize: '12px', color: 'white', lineHeight: '1.2'}}>Reinvented</span>
-                    </div>
-                    <span className="podcast-reimagined-subtext" style={{marginTop: '10px', fontSize: '11px', color: '#69FEFF'}}>The Podcast</span>
-                </div>
-            </div>
-            <div className="imported-newsletter-podcast-details" style={{background: '#A5FEFF', padding: '20px 34px', flexGrow: 1, fontSize: '14px', minHeight: '150px', display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
-                <strong style={{fontSize: '14px', fontWeight: 'bold'}}>Want to dive deeper?</strong>
-                Go listen to our podcast Banking Reinvented
-                where we explore the various trends reshaping banks.<br/>
-                <a href="http://rss.com/podcasts/banking-reinvented" target="_blank" rel="noopener noreferrer" style={{fontSize: '12px', color: '#000', fontWeight: 'bold', textDecoration: 'none', marginTop: '4px'}}>
-                    <strong style={{fontSize: '12px'}}>Listen here</strong>
-                    <img 
-                      src="https://ik.imagekit.io/h3u86kveh/Play%20icon.png?updatedAt=1751884732636" 
-                      alt="Play" 
-                      width="16"
-                      height="16"
-                      style={{verticalAlign: 'middle', marginLeft: '6px', border: 0}}
-                    />
+        {/* ================= PODCAST CARD : Gmail-safe ================= */}
+        <table width="100%" cellPadding={0} cellSpacing={0} style={{margin: '50px 0', borderBottom: '1px solid #E0E6EB'}}>
+          <tbody>
+            <tr>
+              {/* LEFT column – black box */}
+              <td width="150" style={{padding: '20px', backgroundColor: '#000000', verticalAlign: 'top'}}>
+                <table cellPadding={0} cellSpacing={0}>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <img src="https://ik.imagekit.io/h3u86kveh/3xwave.png?updatedAt=1751637359774" alt="Podcast soundwave" width="37" height="17" style={{display: 'block', border: 0}} />
+                      </td>
+                    </tr>
+                    <tr><td height="10"></td></tr>
+                    <tr>
+                      <td style={{fontFamily:'Arial, sans-serif', fontSize:'12px', fontWeight:600, color:'#FFFFFF', lineHeight:'1.2'}}>
+                        Banking<br/>Reinvented
+                      </td>
+                    </tr>
+                    <tr><td height="10"></td></tr>
+                    <tr>
+                      <td style={{fontSize:'11px', color:'#69FEFF'}}>The&nbsp;Podcast</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </td>
+
+              {/* RIGHT column – cyan copy */}
+              <td style={{padding: '20px 34px', fontFamily:'Arial, sans-serif', fontSize:'14px', color:'#000000', backgroundColor: '#A5FEFF', verticalAlign: 'top'}}>
+                <strong style={{fontSize:'14px'}}>Want to dive&nbsp;deeper?</strong> Go listen to our podcast Banking&nbsp;Reinvented where we explore the various trends reshaping banks.<br/><br/>
+                <a href="http://rss.com/podcasts/banking-reinvented" target="_blank" rel="noopener noreferrer" style={{fontSize:'12px', fontWeight:'bold', color:'#000000', textDecoration:'none'}}>
+                  Listen&nbsp;here&nbsp;
+                  <img src="https://ik.imagekit.io/h3u86kveh/Play%20icon.png?updatedAt=1751884732636" alt="Play" width="16" height="16" style={{verticalAlign:'middle', border:0}} />
                 </a>
-            </div>
-        </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
 
         {/* --- DYNAMIC MOVERS & SHAKERS --- */}
         {jobTrackingEntries && jobTrackingEntries.length > 0 && (
@@ -324,27 +338,33 @@ const StaticImportedNewsletter: React.FC<StaticImportedNewsletterProps> = ({
                     <div style={{fontSize: '12px', color: '#000'}}><strong>© Backbase</strong>   •   All rights reserved</div>
                     <div style={{fontSize: '12px'}}><a href="#" style={{textDecoration: 'underline', color: '#4E4E4E'}}>Unsubscribe</a>&nbsp;  •  &nbsp;<a href="#" style={{textDecoration: 'underline', color: '#4E4E4E'}}>Manage preferences</a></div>
                     <div className="imported-newsletter-footer-socials" style={{textAlign: 'center'}}>
-                        <img 
-                          src="https://ik.imagekit.io/h3u86kveh/LinkedIn%20icon.png?updatedAt=1751883568994" 
-                          alt="LinkedIn" 
-                          width="16" 
-                          height="16"
-                          style={{display: 'inline-block', border: 0, verticalAlign: 'middle', marginRight: '8px'}}
-                        />
-                        <img 
-                          src="https://ik.imagekit.io/h3u86kveh/Facebook%20icon.png?updatedAt=1751883568978" 
-                          alt="Facebook" 
-                          width="16" 
-                          height="16"
-                          style={{display: 'inline-block', border: 0, verticalAlign: 'middle', marginRight: '8px'}}
-                        />
-                        <img 
-                          src="https://ik.imagekit.io/h3u86kveh/insta%20icon.png?updatedAt=1751883569027" 
-                          alt="Instagram" 
-                          width="16" 
-                          height="16"
-                          style={{display: 'inline-block', border: 0, verticalAlign: 'middle'}}
-                        />
+                        <a href="https://www.linkedin.com/company/backbase/" target="_blank" rel="noopener noreferrer">
+                          <img 
+                            src="https://ik.imagekit.io/h3u86kveh/LinkedIn%20icon.png?updatedAt=1751883568994" 
+                            alt="LinkedIn" 
+                            width="16" 
+                            height="16"
+                            style={{display: 'inline-block', border: 0, verticalAlign: 'middle', marginRight: '8px'}}
+                          />
+                        </a>
+                        <a href="https://www.facebook.com/backbase/" target="_blank" rel="noopener noreferrer">
+                          <img 
+                            src="https://ik.imagekit.io/h3u86kveh/Facebook%20icon.png?updatedAt=1751883568978" 
+                            alt="Facebook" 
+                            width="16" 
+                            height="16"
+                            style={{display: 'inline-block', border: 0, verticalAlign: 'middle', marginRight: '8px'}}
+                          />
+                        </a>
+                        <a href="https://www.instagram.com/backbase_global/?hl=en" target="_blank" rel="noopener noreferrer">
+                          <img 
+                            src="https://ik.imagekit.io/h3u86kveh/insta%20icon.png?updatedAt=1751883569027" 
+                            alt="Instagram" 
+                            width="16" 
+                            height="16"
+                            style={{display: 'inline-block', border: 0, verticalAlign: 'middle'}}
+                          />
+                        </a>
                     </div>
                 </div>
             </div>
