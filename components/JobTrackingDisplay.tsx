@@ -42,7 +42,7 @@ const JobTrackingDisplay: React.FC = () => {
 
     return (
       <ul className="space-y-3 list-disc pl-5">
-        {entries.map((entry) => (
+        {entries.slice(0, 10).map((entry) => (
           <li key={entry.id} className="text-lg">
             <span className="font-bold" style={{ color: '#D94682' }}>{entry.full_name}</span>
             <span> joins {entry.bank_name} as {entry.role_title}.</span>

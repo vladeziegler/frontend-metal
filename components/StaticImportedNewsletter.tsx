@@ -40,11 +40,31 @@ const StaticImportedNewsletter: React.FC<StaticImportedNewsletterProps> = ({
   // Always use deepDivesWithUrls - single source of truth
   const activeDives = deepDivesWithUrls;
   
+  // Filter and limit job tracking entries (same logic as JobTrackingDisplay)
+  const filteredJobEntries = React.useMemo(() => {
+    if (!jobTrackingEntries || jobTrackingEntries.length === 0) return [];
+    
+    // Filter by appointment_date (last 14 days)
+    const cutoffDate = new Date();
+    cutoffDate.setDate(cutoffDate.getDate() - 14);
+    
+    const filtered = jobTrackingEntries.filter(entry => {
+      if (!entry.appointment_date) return false;
+      const appointmentDate = new Date(entry.appointment_date);
+      return appointmentDate >= cutoffDate;
+    });
+    
+    // Limit to 10 records
+    return filtered.slice(0, 10);
+  }, [jobTrackingEntries]);
+  
   // Debug logging to understand data structure
   console.log('StaticImportedNewsletter Debug:', {
     hasDeepDivesWithUrls: !!deepDivesWithUrls,
     articleDeepDive: activeDives?.article_deep_dive,
-    articleSourceUrl: activeDives?.article_deep_dive ? (activeDives.article_deep_dive as { source_url?: string }).source_url : undefined
+    articleSourceUrl: activeDives?.article_deep_dive ? (activeDives.article_deep_dive as { source_url?: string }).source_url : undefined,
+    totalJobEntries: jobTrackingEntries?.length || 0,
+    filteredJobEntries: filteredJobEntries.length
   });
 
   // A helper function to render a section robustly, preventing errors if data is missing
@@ -372,7 +392,7 @@ const StaticImportedNewsletter: React.FC<StaticImportedNewsletterProps> = ({
             </table>
 
             {/* ================= MOVERS & SHAKERS ================= */}
-            {jobTrackingEntries && jobTrackingEntries.length > 0 && (
+            {filteredJobEntries && filteredJobEntries.length > 0 && (
               <table width="100%" cellPadding={0} cellSpacing={0} style={{margin: '50px 0', paddingBottom: '50px', borderBottom: '1px solid #E0E6EB'}}>
                 <tbody>
                   <tr>
@@ -395,7 +415,7 @@ const StaticImportedNewsletter: React.FC<StaticImportedNewsletterProps> = ({
                         color: '#091c35',
                         lineHeight: '1.6'
                       }}>
-                        {jobTrackingEntries.map(entry => (
+                        {filteredJobEntries.map(entry => (
                           <li key={entry.id} style={{
                             marginBottom: '12px'
                           }}>

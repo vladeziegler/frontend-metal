@@ -33,13 +33,25 @@ export const useJobTrackingStore = create<JobTrackingState>((set) => ({
   fetchJobTrackingEntries: async (days_old = 14) => {
     set({ isLoading: true, error: null });
     try {
-      const response = await fetch(`/api/job-tracking?days_old=${days_old}`);
+      // Fetch all recent records from backend (no date parameter needed)
+      const response = await fetch(`/api/job-tracking`);
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.error || 'Failed to fetch job tracking entries');
       }
-      const data: JobTrackingEntry[] = await response.json();
-      set({ entries: data, isLoading: false });
+      const allData: JobTrackingEntry[] = await response.json();
+      
+      // Filter by appointment_date on the frontend
+      const cutoffDate = new Date();
+      cutoffDate.setDate(cutoffDate.getDate() - days_old);
+      
+      const filteredData = allData.filter(entry => {
+        if (!entry.appointment_date) return false; // Skip entries without appointment_date
+        const appointmentDate = new Date(entry.appointment_date);
+        return appointmentDate >= cutoffDate;
+      });
+      
+      set({ entries: filteredData, isLoading: false });
     } catch (error) {
       console.error("Error in fetchJobTrackingEntries:", error);
       if (error instanceof Error) {
