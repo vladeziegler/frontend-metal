@@ -16,14 +16,6 @@ const formatDate = (dateString: string | null | undefined) => {
     return date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
 };
 
-// Helper to prevent Outlook auto-formatting of dates using Zero-Width Non-Joiner characters
-const formatDateForOutlook = (dateString: string | null | undefined) => {
-    const formattedDate = formatDate(dateString);
-    if (!formattedDate) return '';
-    // Insert Zero-Width Non-Joiner characters to break Outlook's date pattern recognition
-    return formattedDate.replace(/(\d+),?\s+(\d+)/g, '$1\u200C, \u200C$2');
-};
-
 interface StaticImportedNewsletterProps {
   newsletter: GeneratedNewsletterData | null;
   deepDivesWithUrls: AllDeepDivesWithUrlsForMetaSuggestionResponse | null;
@@ -157,19 +149,57 @@ const StaticImportedNewsletter: React.FC<StaticImportedNewsletterProps> = ({
 
 
             {/* ================= HEADER ================= */}
-            <img
-              src="https://ik.imagekit.io/h3u86kveh/Banner.png?updatedAt=1752012827501"
-              alt="Banking Reinvented MOMENTUM by Backbase"
-              width="1593"
-              height="455"
-              style={{
-                width: '100%',
-                maxWidth: '650px',
-                height: 'auto',
-                display: 'block',
-                margin: '10px auto 20px auto'
-              }}
-            />
+            <table width="100%" cellPadding={0} cellSpacing={0} style={{
+              width:'100%',
+              maxWidth:'650px',
+              margin:'10px auto 20px auto'
+            }}>
+              <tbody>
+                {/* Banking Reinvented */}
+                <tr>
+                  <td
+                    style={{padding:'20px 0 12px 18px', textAlign: 'left'}}
+                  >
+                    <img
+                      src="https://ik.imagekit.io/h3u86kveh/3xBanking.png?updatedAt=1751637214695"
+                      alt="Banking Reinvented"
+                      width="120"
+                      height="26"
+                      style={{display:'block',border:0,outline:'none',maxWidth:'100%',height:'auto'}}
+                    />
+                  </td>
+                </tr>
+                {/* MOMENTUM */}
+                <tr>
+                  <td style={{padding: '8px 24px 12px 24px', textAlign: 'left'}}>
+                    <img
+                      src="https://ik.imagekit.io/h3u86kveh/Momentum.png?updatedAt=1751995537842"
+                      alt="MOMENTUM"
+                      style={{
+                        width: '400px',
+                        maxWidth: '100%',
+                        height: 'auto',
+                        display: 'block'
+                      }}
+                    />
+                  </td>
+                </tr>
+                {/* by Backbase */}
+                <tr>
+                  <td
+                    style={{padding:'4px 18px 0 18px', textAlign: 'right'}}
+                  >
+                    <img
+                      src="https://ik.imagekit.io/h3u86kveh/3xbackbase.png?updatedAt=1751637267279"
+                      alt="by Backbase"
+                      width="87"
+                      height="16"
+                      style={{display:'block',border:0,outline:'none',maxWidth:'100%',height:'auto', marginLeft: 'auto'}}
+                    />
+                  </td>
+                </tr>
+              </tbody>
+            </table>
 
             {/* ================= EDITOR'S NOTES SECTION ================= */}
             {newsletter?.editor_notes && (
@@ -290,7 +320,7 @@ const StaticImportedNewsletter: React.FC<StaticImportedNewsletterProps> = ({
                       height="288" 
                       style={{
                         width: '100%',
-                        maxWidth: '602px',
+                        maxWidth: '516px',
                         height: 'auto',
                         border: '1px solid #f5f5f5',
                         display: 'block'
@@ -350,21 +380,35 @@ const StaticImportedNewsletter: React.FC<StaticImportedNewsletterProps> = ({
             <table width="100%" cellPadding={0} cellSpacing={0} style={{margin: '50px 0', borderBottom: '1px solid #E0E6EB'}}>
               <tbody>
                 <tr>
-                  <td style={{padding: '0 24px 50px 24px'}}>
-                    <a href="http://rss.com/podcasts/banking-reinvented" target="_blank" rel="noopener noreferrer">
-                      <img 
-                        src="https://ik.imagekit.io/h3u86kveh/podcast%20card.png?updatedAt=1752497906537" 
-                        alt="Banking Reinvented Podcast" 
-                        width="1548" 
-                        height="450" 
-                        style={{
-                          width: '100%',
-                          maxWidth: '602px',
-                          height: 'auto',
-                          display: 'block',
-                          border: 0
-                        }}
-                      />
+                  {/* LEFT column – black box */}
+                  <td width="150" style={{padding: '20px', backgroundColor: '#000000', verticalAlign: 'top'}}>
+                    <table cellPadding={0} cellSpacing={0}>
+                      <tbody>
+                        <tr>
+                          <td>
+                            <img src="https://ik.imagekit.io/h3u86kveh/3xwave.png?updatedAt=1751637359774" alt="Podcast soundwave" width="37" height="17" style={{display: 'block', border: 0}} />
+                          </td>
+                        </tr>
+                        <tr><td height="10"></td></tr>
+                        <tr>
+                          <td style={{fontFamily:'Arial, sans-serif', fontSize:'12px', fontWeight:600, color:'#FFFFFF', lineHeight:'1.2'}}>
+                            Banking<br/>Reinvented
+                          </td>
+                        </tr>
+                        <tr><td height="10"></td></tr>
+                        <tr>
+                          <td style={{fontSize:'11px', color:'#69FEFF'}}>The&nbsp;Podcast</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </td>
+
+                  {/* RIGHT column – cyan copy */}
+                  <td style={{padding: '20px 34px', fontFamily:'Arial, sans-serif', fontSize:'14px', color:'#000000', backgroundColor: '#A5FEFF', verticalAlign: 'top'}}>
+                    <strong style={{fontSize:'14px'}}>Want to dive&nbsp;deeper?</strong> Go listen to our podcast Banking&nbsp;Reinvented where we explore the various trends reshaping banks.<br/><br/>
+                    <a href="http://rss.com/podcasts/banking-reinvented" target="_blank" rel="noopener noreferrer" style={{fontSize:'12px', fontWeight:'bold', color:'#000000', textDecoration:'none'}}>
+                      Listen&nbsp;here&nbsp;
+                      <img src="https://ik.imagekit.io/h3u86kveh/Play%20icon.png?updatedAt=1751884732636" alt="Play" width="16" height="16" style={{verticalAlign:'middle', border:0}} />
                     </a>
                   </td>
                 </tr>
@@ -450,7 +494,7 @@ const StaticImportedNewsletter: React.FC<StaticImportedNewsletterProps> = ({
                             <a href="https://www.backbase.com/events" target="_blank" rel="noopener noreferrer" style={{color: '#3366FF', textDecoration: 'none'}}>
                               {event['Event Name']}
                             </a>
-                            &nbsp; • &nbsp;{formatDateForOutlook(event['Event Date'])}, {event.Territory}
+                            &nbsp; • &nbsp;{formatDate(event['Event Date'])}, {event.Territory}
                           </li>
                         ))}
                       </ul>
@@ -469,7 +513,7 @@ const StaticImportedNewsletter: React.FC<StaticImportedNewsletterProps> = ({
                       <tbody>
                         <tr>
                           <td style={{fontSize: '12px', color: '#000', fontFamily: 'Arial, sans-serif', paddingBottom: '24px'}}>
-                            Want to talk more? <strong>Let&apos;s chat.</strong><br/><br/>
+                            Want to talk more? <strong>Let&apos;s chat.</strong><br/>
                             All content in this newsletter was edited by Tim Rutten and the rest of the Backbase team. Sent by Backbase, Oosterdoksstraat 114, 1011 DK Amsterdam, The Netherlands
                           </td>
                         </tr>
@@ -477,30 +521,53 @@ const StaticImportedNewsletter: React.FC<StaticImportedNewsletterProps> = ({
                           <td style={{borderTop: '1px solid #E0E6EB', paddingTop: '24px'}}>
                             <table width="100%" cellPadding={0} cellSpacing={0}>
                               <tbody>
-                                {/* Row 1: Copyright */}
                                 <tr>
-                                  <td style={{fontSize: '12px', color: '#000', fontFamily: 'Arial, sans-serif', textAlign: 'center', paddingBottom: '8px'}}>
+                                  <td style={{fontSize: '12px', color: '#000', fontFamily: 'Arial, sans-serif', verticalAlign: 'middle'}}>
                                     <strong>© Backbase</strong> • All rights reserved
                                   </td>
-                                </tr>
-                                {/* Row 2: Unsubscribe */}
-                                <tr>
-                                  <td style={{fontSize: '12px', textAlign: 'center', paddingBottom: '8px'}}>
-                                    <a href="#" style={{textDecoration: 'underline', color: '#4E4E4E'}}>Unsubscribe</a>
+                                  <td style={{fontSize: '12px', textAlign: 'center', verticalAlign: 'middle'}}>
+                                    <a href="#" style={{textDecoration: 'underline', color: '#4E4E4E'}}>Unsubscribe</a> • <a href="#" style={{textDecoration: 'underline', color: '#4E4E4E'}}>Manage preferences</a>
                                   </td>
-                                </tr>
-                                {/* Row 3: LinkedIn */}
-                                <tr>
-                                  <td style={{textAlign: 'center'}}>
-                                    <a href="https://www.linkedin.com/company/backbase/" target="_blank" rel="noopener noreferrer">
-                                      <img 
-                                        src="https://ik.imagekit.io/h3u86kveh/LinkedIn%20icon.png?updatedAt=1751883568994" 
-                                        alt="LinkedIn" 
-                                        width="16" 
-                                        height="16"
-                                        style={{display: 'block', border: 0, margin: '0 auto'}}
-                                      />
-                                    </a>
+                                  <td style={{textAlign: 'right', verticalAlign: 'middle'}}>
+                                    <table cellPadding={0} cellSpacing={0} style={{display: 'inline-table'}}>
+                                      <tbody>
+                                        <tr>
+                                          <td style={{paddingRight: '8px', verticalAlign: 'middle'}}>
+                                            <a href="https://www.linkedin.com/company/backbase/" target="_blank" rel="noopener noreferrer">
+                                              <img 
+                                                src="https://ik.imagekit.io/h3u86kveh/LinkedIn%20icon.png?updatedAt=1751883568994" 
+                                                alt="LinkedIn" 
+                                                width="16" 
+                                                height="16"
+                                                style={{display: 'block', border: 0}}
+                                              />
+                                            </a>
+                                          </td>
+                                          <td style={{paddingRight: '8px', verticalAlign: 'middle'}}>
+                                            <a href="https://www.facebook.com/backbase/" target="_blank" rel="noopener noreferrer">
+                                              <img 
+                                                src="https://ik.imagekit.io/h3u86kveh/Facebook%20icon.png?updatedAt=1751883568978" 
+                                                alt="Facebook" 
+                                                width="16" 
+                                                height="16"
+                                                style={{display: 'block', border: 0}}
+                                              />
+                                            </a>
+                                          </td>
+                                          <td style={{verticalAlign: 'middle'}}>
+                                            <a href="https://www.instagram.com/backbase_global/?hl=en" target="_blank" rel="noopener noreferrer">
+                                              <img 
+                                                src="https://ik.imagekit.io/h3u86kveh/insta%20icon.png?updatedAt=1751883569027" 
+                                                alt="Instagram" 
+                                                width="16" 
+                                                height="16"
+                                                style={{display: 'block', border: 0}}
+                                              />
+                                            </a>
+                                          </td>
+                                        </tr>
+                                      </tbody>
+                                    </table>
                                   </td>
                                 </tr>
                               </tbody>
