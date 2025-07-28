@@ -178,7 +178,7 @@ const StaticImportedNewsletter: React.FC<StaticImportedNewsletterProps> = ({
 
             {/* ================= HEADER ================= */}
             <img
-              src="https://ik.imagekit.io/h3u86kveh/Banner.png?updatedAt=1752012827501"
+              src="https://ik.imagekit.io/h3u86kveh/HACK.png?updatedAt=1753099515120"
               alt="Banking Reinvented MOMENTUM by Backbase"
               width="1593"
               height="455"
@@ -283,7 +283,7 @@ const StaticImportedNewsletter: React.FC<StaticImportedNewsletterProps> = ({
               <tbody>
                 <tr>
                   <td style={{padding: '0 24px 25px 24px', fontSize: '14px', fontStyle: 'italic', color: '#4E4E4E', fontFamily: 'Arial, sans-serif'}}>
-                    Ps. Did you get this email forwarded? Subscribe <a href="https://www.linkedin.com/in/timrutten" target="_blank" rel="noopener noreferrer" style={{color: '#3366FF', textDecoration: 'none'}}>here</a>
+                    Ps. Did you get this email forwarded? Subscribe <a href="https://www.backbase.com/ty/newsletter-thank-you-page" target="_blank" rel="noopener noreferrer" style={{color: '#3366FF', textDecoration: 'none'}}>here</a>
                   </td>
                 </tr>
               </tbody>
@@ -506,7 +506,7 @@ const StaticImportedNewsletter: React.FC<StaticImportedNewsletterProps> = ({
                                 {/* Row 2: Unsubscribe */}
                                 <tr>
                                   <td style={{fontSize: '12px', textAlign: 'center', paddingBottom: '8px'}}>
-                                    <a href="#" style={{textDecoration: 'underline', color: '#4E4E4E'}}>Unsubscribe</a>
+                                    <a href="https://www.backbase.com/ty/newsletter-unsubscribe-page" style={{textDecoration: 'underline', color: '#4E4E4E'}}>Unsubscribe</a>
                                   </td>
                                 </tr>
                                 {/* Row 3: LinkedIn */}
