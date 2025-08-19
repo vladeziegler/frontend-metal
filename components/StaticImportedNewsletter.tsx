@@ -506,7 +506,7 @@ const StaticImportedNewsletter: React.FC<StaticImportedNewsletterProps> = ({
                                 {/* Row 2: Unsubscribe */}
                                 <tr>
                                   <td style={{fontSize: '12px', textAlign: 'center', paddingBottom: '8px'}}>
-                                    <a href="https://www.backbase.com/ty/newsletter-unsubscribe-page" style={{textDecoration: 'underline', color: '#4E4E4E'}}>Unsubscribe</a>
+                                    <a href="https://www.backbase.com/sorry-to-see-you-go" style={{textDecoration: 'underline', color: '#4E4E4E'}}>Unsubscribe</a>
                                   </td>
                                 </tr>
                                 {/* Row 3: LinkedIn */}
